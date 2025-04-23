@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CommonModule } from '@angular/common';
     AppComponent,
     HomeComponent,
     ProductCardComponent,
-    CartComponent
+    CartComponent,
+    MatSnackBarModule 
   ],
   providers: [],
   bootstrap: []

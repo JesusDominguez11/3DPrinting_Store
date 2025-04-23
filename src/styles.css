@@ -59,3 +59,20 @@ body {
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Notificación personalizada */
+.custom-snackbar {
+  background-color: #4CAF50 !important; /* Verde de éxito */
+  color: white !important;
+  font-family: Arial, sans-serif;
+  border-radius: 4px !important;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 600px) {
+  .mat-snack-bar-container {
+    margin-bottom: 70px !important;
+    max-width: 90% !important;
+  }
+}

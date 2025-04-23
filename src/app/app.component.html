@@ -1,2 +1,10 @@
-<h1>Printing 3D</h1>
-<router-outlet />
+
+
+
+<header>
+    <h1>Printing 3D</h1>
+    <a mat-icon-button routerLink="/cart">
+      <mat-icon [matBadge]="cartItemCount" matBadgeColor="warn">shopping_cart</mat-icon>
+    </a>
+  </header>
+  <router-outlet></router-outlet>

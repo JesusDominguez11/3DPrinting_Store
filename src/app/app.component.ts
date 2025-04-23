@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy  } from '@angular/core';
 import { CartService } from './services/cart.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // Añade esto
+import { RouterModule } from '@angular/router'; 
+import { Subscription } from 'rxjs'; // Para manejar la suscripción
+
 
 @Component({
   selector: 'app-root',
@@ -10,10 +12,16 @@ import { RouterModule } from '@angular/router'; // Añade esto
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   cartItemCount = 0;
 
   constructor(private cartService: CartService) {
-    this.cartItemCount = this.cartService.getCartItems().length;
+    cartService.getCartItems().subscribe(items => {
+      this.cartItemCount = items.length;
+    });
   }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
+
 }

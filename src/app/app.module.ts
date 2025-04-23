@@ -7,6 +7,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HomeComponent,
     ProductCardComponent,
     CartComponent,
-    MatSnackBarModule 
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule          
   ],
   providers: [],
   bootstrap: []

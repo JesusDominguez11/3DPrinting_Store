@@ -2,7 +2,7 @@
 
 <div *ngIf="(cartItems$ | async)?.length; else emptyCart">
   <div class="cart-item" *ngFor="let item of cartItems$ | async">
-    <img [src]="item.imageUrl" [alt]="item.name" width="50">
+    <img [src]="item.image" [alt]="item.name" width="50">
     <div>
       <h3>{{ item.name }}</h3>
       <p>${{ item.price | number:'1.2-2' }}</p>

@@ -1,10 +1,8 @@
 <div class="product-card">
   <div class="product-image">
-    <img [src]="product.imageUrl" [alt]="product.name">
+    <img [src]="product.image" [alt]="product.name">
     <div class="overlay">
-      <button mat-icon-button (click)="onAddToCart()">
-        <mat-icon>add_shopping_cart</mat-icon>
-      </button>
+
     </div>
   </div>
   <div class="product-details">
@@ -12,7 +10,10 @@
     <p class="description">{{ product.description || 'Figura coleccionable premium' }}</p>
     <div class="price-section">
       <span class="price">${{ product.price | number:'1.2-2' }}</span>
-      <button mat-raised-button color="accent" (click)="onAddToCart()">Añadir</button>
+      <!-- <button mat-raised-button color="accent" (click)="onAddToCart()">Añadir</button> -->
+      <button mat-icon-button class="cart-button" (click)="onAddToCart()" aria-label="Añadir al carrito">
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
     </div>
   </div>
 </div>

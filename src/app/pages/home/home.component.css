@@ -1,97 +1,4 @@
-/* Usa variables globales
-.hero {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                url('/assets/images/hero-bg2.jpg') center/cover;
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: var(--color-text-light);
-  }
 
-  
-  .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  }
-  
-  .hero p {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .featured-products {
-    padding: 4rem 2rem;
-    background: #f9f9f9;
-  }
-  
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-
-
-
-
-
-
-  .categories {
-    padding: 4rem 2rem;
-    text-align: center;
-  }
-  
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-  
-  .category-card {
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-  
-  .category-card:hover {
-    transform: scale(1.03);
-  }
-  
-  .category-card img {
-    height: 150px;
-    object-fit: cover;
-    filter: brightness(0.8);
-  }
-  
-  .category-card h3 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    color: white;
-    padding: 1rem;
-    background: linear-gradient(transparent, rgba(0,0,0,0.7));
-    margin: 0;
-  }
-
-
-
- */
-
-
- /* Hero Section */
 .hero {
   background: 
     linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
@@ -121,7 +28,48 @@
   margin-bottom: var(--spacing-lg);
 }
 
-/* Featured Products */
+/* Versión mejorada para el botón hero */
+.hero-button {
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  border-radius: 30px; /* Más redondeado para botones grandes */
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 6px rgba(231, 23, 68, 0.3); /* Sombra con color primario */
+  border: 2px solid transparent;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.hero-button:hover {
+  background: var(--color-deep);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(100, 23, 129, 0.4); /* Sombra con color deep */
+}
+
+.hero-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(100, 23, 129, 0.4);
+}
+
+.hero-button mat-icon {
+  margin-left: 8px;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.hero-button:hover mat-icon {
+  transform: translateX(4px);
+}
+
+
+
 .featured-products {
   padding: var(--spacing-lg) var(--spacing-md);
   background: var(--color-bg-light);
@@ -141,69 +89,6 @@
   margin-left: auto;
   margin-right: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Categories */
-/* .categories {
-  padding: var(--spacing-lg) var(--spacing-md);
-  background: var(--color-deep);
-  color: var(--color-text-light);
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-md);
-  max-width: var(--max-width);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.category-card {
-  background: var(--color-bg-light);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-.category-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 12px var(--color-primary);
-}
-
-.category-card img {
-  height: 150px;
-  object-fit: cover;
-  filter: brightness(0.8);
-}
-
-.category-card h3 {
-  background: linear-gradient(transparent, rgba(0,0,0,0.7));
-  color: var(--color-text-light);
-} */
-
-
-
-
-
-
 
 
 .categories {

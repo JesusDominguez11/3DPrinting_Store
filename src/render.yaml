@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: 3dprinting-store
+    runtime: node
+    buildCommand: npm install && npm run build -- --configuration=production
+    startCommand: npm start
+    env: node

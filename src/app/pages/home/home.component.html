@@ -1,9 +1,31 @@
-<h1>Tienda de Figuras 3D</h1>
-<div class="products-grid">
-  @for (product of products; track product.id) {
+<section class="hero">
+  <div class="hero-content">
+    <h1>Colecciona Figuras 3D</h1>
+    <p>Impresiones de alta calidad para amantes del detalle</p>
+    <p>Compra impresiones que ya han pasado por pruebas de calidad o manda tus propios archivos 3D a imprimir.
+      Bajos costos y envíos rápidos.
+    </p>
+    <button mat-raised-button color="primary" routerLink="/products">Explorar Catálogo</button>
+  </div>
+</section>
+
+<section class="featured-products">
+  <h2>Novedades Destacadas</h2>
+  <div class="product-grid">
     <app-product-card 
+      *ngFor="let product of featuredProducts"
       [product]="product"
       (addToCart)="onAddToCart($event)">
     </app-product-card>
-  }
-</div>
+  </div>
+</section>
+
+<section class="categories">
+  <h2>Explora por Categoría</h2>
+  <div class="category-grid">
+    <div class="category-card" *ngFor="let category of categories">
+      <img [src]="category.image" [alt]="category.name">
+      <h3>{{ category.name }}</h3>
+    </div>
+  </div>
+</section>

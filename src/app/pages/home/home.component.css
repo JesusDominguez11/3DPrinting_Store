@@ -1,0 +1,82 @@
+.hero {
+  background: 
+    /* linear-gradient (rgba(0,0,0,0.7)), */
+    url('/assets/images/hero-bg2.jpg') no-repeat center/cover;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white; /* Descomenta si usas texto */
+}
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .featured-products {
+    padding: 4rem 2rem;
+    background: #f9f9f9;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .categories {
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .category-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .category-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .category-card img {
+    /* width: 100%; */
+    height: 150px;
+    object-fit: cover;
+    filter: brightness(0.8);
+  }
+  
+  .category-card h3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    margin: 0;
+  }

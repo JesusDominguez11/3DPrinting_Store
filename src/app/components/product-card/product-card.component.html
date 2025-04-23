@@ -1,6 +1,18 @@
 <div class="product-card">
-  <img [src]="product.imageUrl" [alt]="product.name">
-  <h3>{{ product.name }}</h3>
-  <p>${{ product.price | number:'1.2-2' }}</p>
-  <button (click)="onAddToCart()">Añadir al carrito</button>
+  <div class="product-image">
+    <img [src]="product.imageUrl" [alt]="product.name">
+    <div class="overlay">
+      <button mat-icon-button (click)="onAddToCart()">
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="product-details">
+    <h3>{{ product.name }}</h3>
+    <p class="description">{{ product.description || 'Figura coleccionable premium' }}</p>
+    <div class="price-section">
+      <span class="price">${{ product.price | number:'1.2-2' }}</span>
+      <button mat-raised-button color="accent" (click)="onAddToCart()">Añadir</button>
+    </div>
+  </div>
 </div>

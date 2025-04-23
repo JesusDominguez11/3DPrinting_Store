@@ -14,6 +14,19 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent {
   products: Product[] = [];
 
+  featuredProducts: Product[] = [];
+
+ngOnInit() {
+  this.featuredProducts = this.productService.getProducts().slice(0, 4); // Muestra solo 4 productos destacados
+}
+
+categories = [
+  { name: 'Videojuegos', image: 'assets/images/videogames_2737379.png' },
+  { name: 'Películas', image: 'assets/images/movies_2459778.png' },
+  { name: 'Anime', image: 'assets/images/anime_category.png' },
+  { name: 'Personalizadas', image: 'assets/images/custom.png' }
+];
+
   constructor(
     private productService: ProductService,
     private cartService: CartService

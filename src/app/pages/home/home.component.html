@@ -1,0 +1,10 @@
+<p>¡Bienvenido a mi tienda de figuras 3D!</p>
+
+@for (product of products; track product.id) {
+    <div class="product-card">
+      <img [src]="product.imageUrl" [alt]="product.name">
+      <h3>{{ product.name }}</h3>
+      <p>${{ product.price }}</p>
+      <button>Agregar al carrito</button>
+    </div>
+  }

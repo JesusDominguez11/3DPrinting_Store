@@ -1,8 +1,12 @@
 <header>
   <h1>3DVerse, te da la bienvenida</h1>
-  <a routerLink="/cart" class="cart-link">
-    🛒 Carrito ({{ cartItemCount }})
-  </a>
+  <div class="cart-floating" (click)="navigateToCart()">
+    <mat-icon class="cart-icon">
+      shopping_cart ({{ cartItemCount }})
+      </mat-icon>
+      <span class="cart-badge">{{ cartItemCount }}</span>
+    </div>
+      
 </header>
 
 <main>

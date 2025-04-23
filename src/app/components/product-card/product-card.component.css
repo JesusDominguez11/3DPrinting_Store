@@ -8,7 +8,7 @@
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(209, 19, 92, 0.712);
+  box-shadow: 0 6px 12px rgba(78, 78, 78, 0.712);
 }
 
 .product-image {

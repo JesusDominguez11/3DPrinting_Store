@@ -25,6 +25,15 @@ export class CartService {
     const current = this.cartItemsSubject.value;
     this.cartItemsSubject.next([...current, product]);
     
+    const cartElement = document.querySelector('.cart-floating');
+    
+    if (cartElement) {
+      cartElement.classList.add('pulse');
+      setTimeout(() => {
+        cartElement.classList.remove('pulse');
+      }, 500);
+    }
+
     this.notificationService.show(
       `✅ ${product.name} añadido al carrito`,
       'success'

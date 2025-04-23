@@ -3,7 +3,7 @@
 @import './styles/_typography.css';
 @import './styles/_themes.css';
 
-/* Estilos globales específicos */
+
 .mat-primary {
   --mdc-theme-primary: var(--color-primary);
 }
@@ -13,3 +13,8 @@
   color: white !important;
 }
 
+
+
+body {
+  margin: -8px;
+}

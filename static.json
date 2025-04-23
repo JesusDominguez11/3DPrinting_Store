@@ -1,11 +1,13 @@
 {
-    "routes": {
-      "/*": {
-        "origin": "/index.html",
-        "headers": {
-          "Cache-Control": "no-cache"
-        }
+  "root": "dist/3-dprinting-store",
+  "routes": {
+    "/*": {
+      "origin": "/index.html",
+      "headers": {
+        "Cache-Control": "no-cache"
       }
-    },
-    "cleanUrls": true
-  }
+    }
+  },
+  "cleanUrls": true,
+  "spa": true
+}

@@ -4,10 +4,11 @@ import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, ProductCardComponent],
+  imports: [CommonModule, ProductCardComponent, MatIcon],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

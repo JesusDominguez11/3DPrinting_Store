@@ -11,7 +11,7 @@
   </div>
 </section>
 
-<section class="featured-products">
+<!-- <section class="featured-products">
   <h2>Novedades Destacadas</h2>
   <div class="product-grid">
     <app-product-card 
@@ -19,6 +19,40 @@
       [product]="product"
       (addToCart)="onAddToCart($event)">
     </app-product-card>
+  </div>
+</section> -->
+<section class="featured-products">
+  <h2>Novedades Destacadas</h2>
+  
+  <div class="carousel-container">
+    <button class="carousel-button prev" (click)="prevSlide()" aria-label="Previous product">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+      </svg>
+    </button>
+    
+    <div class="carousel">
+      <div class="carousel-inner" [style.transform]="'translateX(' + currentOffset + 'px)'">
+        <app-product-card 
+          *ngFor="let product of featuredProducts"
+          [product]="product"
+          (addToCart)="onAddToCart($event)"
+          class="carousel-item">
+        </app-product-card>
+      </div>
+    </div>
+    
+    <button class="carousel-button next" (click)="nextSlide()" aria-label="Next product">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="carousel-dots">
+    <span *ngFor="let dot of dots; let i = index" 
+          [class.active]="i === currentSlide"
+          (click)="goToSlide(i)"></span>
   </div>
 </section>
 

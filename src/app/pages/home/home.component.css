@@ -89,14 +89,13 @@
 }
 
 
-
-.featured-products {
+/* ----------------------------------------------------------------------------------- */
+/* .featured-products {
   padding: var(--spacing-lg) var(--spacing-md);
   background: var(--color-bg-light);
 }
 
 .featured-products h2 {
-  /* color: var(--color-dark); */
   text-align: center;
 }
 
@@ -108,7 +107,122 @@
   max-width: var(--max-width);
   margin-left: auto;
   margin-right: auto;
+} */
+.featured-products {
+  padding: var(--spacing-lg) var(--spacing-md);
+  background: var(--color-bg-light);
+  position: relative;
+  overflow: hidden;
 }
+
+.featured-products h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: calc(var(--max-width) + 100px);
+  margin: 0 auto;
+}
+
+.carousel {
+  width: calc(100% - 100px);
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.carousel-item {
+  flex: 0 0 calc(100% / 3);
+  padding: 0 var(--spacing-sm);
+  box-sizing: border-box;
+}
+
+.carousel-button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.carousel-button:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.1);
+}
+
+.carousel-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.carousel-button.prev {
+  margin-right: var(--spacing-sm);
+}
+
+.carousel-button.next {
+  margin-left: var(--spacing-sm);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-md);
+  gap: var(--spacing-xs);
+}
+
+.carousel-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-gray-light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dots span.active {
+  background: var(--color-primary);
+  transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .carousel-item {
+    flex: 0 0 calc(100% / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    flex: 0 0 100%;
+  }
+  
+  .carousel {
+    width: calc(100% - 60px);
+  }
+  
+  .carousel-button {
+    width: 30px;
+    height: 30px;
+  }
+}
+/* ----------------------------------------------------------------------------------- */
+
 
 
 .categories {

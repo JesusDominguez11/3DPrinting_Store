@@ -13,7 +13,7 @@
 
 .product-image {
   position: relative;
-  height: 250px;
+  max-height: 400px;
   overflow: hidden;
 }
 

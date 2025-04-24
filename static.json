@@ -1,10 +1,9 @@
 {
-    "root": "dist/3-dprinting-store/browser",
+    "root": "dist/public/browser",
     "routes": {
       "/*": {
         "origin": "/index.html"
       }
     },
-    "spa": true,
-    "cleanUrls": true
+    "spa": true
   }

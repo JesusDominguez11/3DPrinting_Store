@@ -1,10 +1,9 @@
 {
-  "root": "dist/3-dprinting-store/browser",
-  "routes": {
-    "/*": {
-      "origin": "/index.html"
-    }
-  },
-  "spa": true,
-  "cleanUrls": true
-}
+    "root": "dist/3-dprinting-store/browser",
+    "routes": {
+      "/browser/*": {
+        "origin": "/browser/index.html"
+      }
+    },
+    "spa": true
+  }

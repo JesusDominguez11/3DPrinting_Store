@@ -1,13 +1,10 @@
 {
-  "root": "dist/3-dprinting-store",
+  "root": "dist/3-dprinting-store/browser",
   "routes": {
     "/*": {
-      "origin": "/index.html",
-      "headers": {
-        "Cache-Control": "no-cache"
-      }
+      "origin": "/index.html"
     }
   },
-  "cleanUrls": true,
-  "spa": true
+  "spa": true,
+  "cleanUrls": true
 }

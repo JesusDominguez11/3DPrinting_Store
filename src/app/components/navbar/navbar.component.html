@@ -1,13 +1,13 @@
 <nav>
   <div id="nav-container">
-    <!-- Logo y marca -->
+    <!-- brand -->
     <div id="nav-brand">
-      <a routerLink="/">
+      <a routerLink="/home">
         <span>3DVerse</span>
       </a>
     </div>
 
-    <!-- Menú de navegación -->
+    <!-- menu -->
     <div id="nav-menu" [class.active]="isMenuOpen">
       <ul>
         <li><a (click)="scrollTo('home')" [class.active]="activeSection === 'home'">Inicio</a></li>
@@ -17,7 +17,7 @@
       </ul>
     </div>
 
-    <!-- Icono de carrito con animación -->
+    <!-- cart -->
     <button class="cart-icon-button" 
             (click)="goToCart()" 
             aria-label="Carrito de compras"
@@ -28,13 +28,10 @@
       <span class="cart-count" ngif="cartItemsCount > 0">{{cartItemsCount}}</span>
     </button>
 
-      <!-- Botón hamburguesa (solo visible en móvil) -->
-    <!-- <div id="nav-menu" [class.active]="isMenuOpen"> -->
+      <!-- hambur -->
       <button id="nav-toggle" class="hamburger" (click)="toggleMenu()">
         <span class="material-icons">menu</span>
       </button>
-    <!-- </div> -->
-
   
   </div>
 </nav>

@@ -82,4 +82,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
   closeMenu() {
     this.isMenuOpen = false;
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.isMenuOpen) return;
+
+    const target = event.target as HTMLElement;
+    const menu = document.getElementById('nav-menu');
+    const toggle = document.getElementById('nav-toggle');
+
+    // Si el click NO fue dentro del menú ni dentro del botón, lo cerramos
+    if (
+      menu && toggle &&
+      !menu.contains(target) &&
+      !toggle.contains(target)
+    ) {
+      this.closeMenu();
+    }
+  }
 }

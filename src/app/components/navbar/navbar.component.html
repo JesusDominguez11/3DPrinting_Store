@@ -29,9 +29,11 @@
     </button>
 
       <!-- Botón hamburguesa (solo visible en móvil) -->
-  <button class="hamburger" (click)="toggleMenu()">
-    <span class="material-icons">menu</span>
-  </button>
+    <!-- <div id="nav-menu" [class.active]="isMenuOpen"> -->
+      <button id="nav-toggle" class="hamburger" (click)="toggleMenu()">
+        <span class="material-icons">menu</span>
+      </button>
+    <!-- </div> -->
 
   
   </div>

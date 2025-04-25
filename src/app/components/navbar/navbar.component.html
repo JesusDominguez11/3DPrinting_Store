@@ -28,11 +28,11 @@
       <span class="cart-count" ngif="cartItemsCount > 0">{{cartItemsCount}}</span>
     </button>
 
-    <!-- Menú hamburguesa (solo móvil) -->
-    <button id="nav-toggle" (click)="toggleMenu()" aria-label="Menú" [class.active]="isMenuOpen">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
+      <!-- Botón hamburguesa (solo visible en móvil) -->
+  <button class="hamburger" (click)="toggleMenu()">
+    <span class="material-icons">menu</span>
+  </button>
+
+  
   </div>
 </nav>

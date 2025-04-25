@@ -46,10 +46,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
   @HostListener('window:scroll', ['$event'])
   onScroll() {
     const sections = ['home', 'categories', 'about-us', 'contact'];
@@ -76,5 +72,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   goToCart() {
     // Implementa la navegación al carrito aquí
     console.log('Navegando al carrito');
+  }
+
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 }

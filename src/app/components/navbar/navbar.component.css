@@ -152,7 +152,7 @@ nav {
 
 
 /* Menú hamburguesa */
-#nav-toggle {
+/* #nav-toggle {
   display: none;
   background: none;
   border: none;
@@ -172,7 +172,7 @@ nav {
   background: var(--text-color);
   margin: 5px 0;
   transition: var(--transition);
-}
+} */
 
 
 
@@ -250,4 +250,25 @@ nav {
     width: 20px;
     height: 20px;
   }
+}
+
+
+
+
+/* Botón hamburguesa */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    position: inherit;
+    order: 2;
+  }
+
 }

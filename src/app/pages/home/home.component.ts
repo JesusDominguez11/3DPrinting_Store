@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
@@ -10,12 +10,14 @@ import { MatIcon } from '@angular/material/icon';
   standalone: true,
   imports: [CommonModule, ProductCardComponent, MatIcon],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+
     private cartService: CartService
   ) {}
 

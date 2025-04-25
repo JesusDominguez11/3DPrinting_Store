@@ -13,52 +13,52 @@ import { MatIcon } from '@angular/material/icon';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  products: Product[] = [];
-
   featuredProducts: Product[] = [];
+  currentSlide = 0;
+  currentOffset = 0;
+  itemWidth = 0; // Se calculará dinámicamente
+  dots: number[] = [];
 
-    currentSlide = 0;
-    currentOffset = 0;
-    itemWidth = 300; // Ajusta según el ancho de tus cards
-    visibleItems = 3; // Cantidad de items visibles a la vez
-    dots: number[] = [];
-
-ngOnInit() {
-  this.featuredProducts = this.productService.getProducts().slice(0, 4); // Muestra solo 4 productos destacados
-  this.dots = Array(Math.ceil(this.featuredProducts.length / this.visibleItems)).fill(0).map((x, i) => i);
-}
-
-categories = [
-  { name: 'Videojuegos', image: 'assets/images/videogames_2737379.png' },
-  { name: 'Películas', image: 'assets/images/movies_2459778.png' },
-  { name: 'Anime', image: 'assets/images/anime_category.png' },
-  { name: 'Personalizadas', image: 'assets/images/custom.png' }
-];
+  categories = [
+    { name: 'Videojuegos', image: 'assets/images/videogames_2737379.png' },
+    { name: 'Películas', image: 'assets/images/movies_2459778.png' },
+    { name: 'Anime', image: 'assets/images/anime_category.png' },
+    { name: 'Personalizadas', image: 'assets/images/custom.png' }
+  ];
 
   constructor(
     private productService: ProductService,
     private cartService: CartService
-  ) {
-    this.products = this.productService.getProducts();
+  ) {}
+
+  ngOnInit() {
+    this.featuredProducts = this.productService.getProducts().slice(0, 4);
+    this.dots = Array(this.featuredProducts.length).fill(0).map((x, i) => i);
+    
+    // Calcular el ancho del item después de que la vista se haya renderizado
+    setTimeout(() => {
+      const container = document.querySelector('.carousel-container');
+      if (container) {
+        this.itemWidth = container.clientWidth;
+      }
+    });
   }
 
-  onAddToCart(product: Product) { // Asegúrate de recibir Product
+  onAddToCart(product: Product) {
     this.cartService.addToCart(product);
-    console.log('Producto añadido:', product); // Verifica en consola
+    console.log('Producto añadido:', product);
   }
 
   goToSlide(index: number) {
     this.currentSlide = index;
-    this.currentOffset = -(index * this.itemWidth * this.visibleItems);
+    this.currentOffset = -(this.currentSlide * this.itemWidth);
   }
 
   nextSlide() {
-    const maxSlides = Math.ceil(this.featuredProducts.length / this.visibleItems) - 1;
-    if (this.currentSlide < maxSlides) {
+    if (this.currentSlide < this.featuredProducts.length - 1) {
       this.currentSlide++;
-      this.currentOffset = -(this.currentSlide * this.itemWidth * this.visibleItems);
+      this.currentOffset = -(this.currentSlide * this.itemWidth);
     } else {
-      // Opcional: volver al inicio
       this.currentSlide = 0;
       this.currentOffset = 0;
     }
@@ -67,13 +67,10 @@ categories = [
   prevSlide() {
     if (this.currentSlide > 0) {
       this.currentSlide--;
-      this.currentOffset = -(this.currentSlide * this.itemWidth * this.visibleItems);
+      this.currentOffset = -(this.currentSlide * this.itemWidth);
     } else {
-      // Opcional: ir al final
-      const maxSlides = Math.ceil(this.featuredProducts.length / this.visibleItems) - 1;
-      this.currentSlide = maxSlides;
-      this.currentOffset = -(maxSlides * this.itemWidth * this.visibleItems);
+      this.currentSlide = this.featuredProducts.length - 1;
+      this.currentOffset = -(this.currentSlide * this.itemWidth);
     }
   }
-  
 }

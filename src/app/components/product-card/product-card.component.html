@@ -1,18 +1,18 @@
 <div class="product-card">
-  <div class="product-image">
-    <img [src]="product.image" [alt]="product.name">
-    <div class="overlay">
-
-    </div>
+  <div class="product-image-container">
+    <img [src]="product.image" [alt]="product.name" class="product-image" loading="lazy">
   </div>
-  <div class="product-details">
-    <h3>{{ product.name }}</h3>
-    <p class="description">{{ product.description || 'Figura coleccionable premium' }}</p>
-    <div class="price-section">
-      <span class="price">${{ product.price | number:'1.2-2' }}</span>
-      <!-- <button mat-raised-button color="accent" (click)="onAddToCart()">Añadir</button> -->
-      <button mat-icon-button class="cart-button" (click)="onAddToCart()" aria-label="Añadir al carrito">
-        <mat-icon>add_shopping_cart</mat-icon>
+  
+  <div class="product-info">
+    <h3 class="product-title">{{ product.name }}</h3>
+    <p class="product-description">{{ product.description || 'Figura coleccionable premium' }}</p>
+    
+    <div class="product-footer">
+      <span class="product-price">${{ product.price | number:'1.2-2' }}</span>
+      <button class="add-to-cart-button" (click)="onAddToCart()" aria-label="Añadir al carrito">
+        <svg class="cart-icon" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M17,18A2,2 0 0,1 19,20A2,2 0 0,1 17,22C15.89,22 15,21.1 15,20C15,18.89 15.89,18 17,18M1,2H4.27L5.21,4H20A1,1 0 0,1 21,5C21,5.17 20.95,5.34 20.88,5.5L17.3,11.97C16.96,12.58 16.3,13 15.55,13H8.1L7.2,14.63L7.17,14.75A0.25,0.25 0 0,0 7.42,15H19V17H7A2,2 0 0,1 5,15C5,14.65 5.09,14.32 5.24,14.04L6.6,11.59L3,4H1V2M7,18A2,2 0 0,1 9,20A2,2 0 0,1 7,22C5.89,22 5,21.1 5,20C5,18.89 5.89,18 7,18M16,11L18.78,6H6.14L8.5,11H16Z"/>
+        </svg>
       </button>
     </div>
   </div>

@@ -1,67 +1,123 @@
-<section class="hero">
-  <div class="hero-content">
+<!-- Hero / Inicio -->
+<section id="home" class="animate__animated animate__fadeIn">
+  <div>
     <h1>Colecciona Figuras 3D</h1>
     <p>Impresiones de alta calidad para amantes del detalle</p>
-    <p>Compra impresiones que ya han pasado por pruebas de calidad o manda tus propios archivos 3D a imprimir.
+    <p>
+      Compra impresiones que ya han pasado por pruebas de calidad o manda tus propios archivos 3D a imprimir.
       Bajos costos y envíos rápidos.
     </p>
-    <button mat-raised-button color="primary" class="hero-button gradient-button" routerLink="/products">Explorar Catálogo
+    <button mat-raised-button color="primary" routerLink="/products">
+      Explorar Catálogo
       <mat-icon>arrow_forward</mat-icon>
     </button>
   </div>
+
+  <div id="featured-products" class="animate__animated animate__fadeIn">
+    <h2>Novedades Destacadas</h2>
+
+          <app-product-card 
+            *ngFor="let product of featuredProducts"
+            [product]="product"
+            (addToCart)="onAddToCart($event)"
+            class="carousel-item">
+          </app-product-card>
+
+  </div>
 </section>
 
-<!-- <section class="featured-products">
-  <h2>Novedades Destacadas</h2>
-  <div class="product-grid">
-    <app-product-card 
-      *ngFor="let product of featuredProducts"
-      [product]="product"
-      (addToCart)="onAddToCart($event)">
-    </app-product-card>
+<!-- Categories -->
+<section id="categories" class="animate__animated animate__fadeIn">
+  <h2>Explora por Categoría</h2>
+  <div class="categories-container">
+    <div *ngFor="let category of categories" class="category-card">
+      <img [src]="category.image" [alt]="category.name" class="category-image">
+      <h3>{{ category.name }}</h3>
+    </div>
   </div>
-</section> -->
-<section class="featured-products">
-  <h2>Novedades Destacadas</h2>
-  
-  <div class="carousel-container">
-    <button class="carousel-button prev" (click)="prevSlide()" aria-label="Previous product">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
-      </svg>
-    </button>
+</section>
+
+<section id="about-us" class="animate__animated animate__fadeIn">
+  <div>
+    <h2>Innovación en Cada Capa</h2>
+    <p class="subtitle">Desde 2020, transformando ideas en realidad tangible</p>
     
-    <div class="carousel">
-      <div class="carousel-inner" [style.transform]="'translateX(' + currentOffset + 'px)'">
-        <app-product-card 
-          *ngFor="let product of featuredProducts"
-          [product]="product"
-          (addToCart)="onAddToCart($event)"
-          class="carousel-item">
-        </app-product-card>
+    <div class="about-grid">
+      <!-- Tarjeta 1 -->
+      <div class="about-card">
+        <span class="about-icon">🔄</span>
+        <h3>Tecnología de Vanguardia</h3>
+        <p>Utilizamos impresoras 3D de última generación (FDM, SLA y SLS) para garantizar precisión milimétrica en cada proyecto.</p>
+      </div>
+      
+      <!-- Tarjeta 2 -->
+      <div class="about-card">
+        <span class="about-icon">♻️</span>
+        <h3>Sostenibilidad</h3>
+        <p>Materiales eco-friendly: filamentos biodegradables (PLA) y resinas reciclables. Reducimos desperdicios con sistemas de soporte optimizados.</p>
+      </div>
+      
+      <!-- Tarjeta 3 -->
+      <div class="about-card">
+        <span class="about-icon">🔍</span>
+        <h3>Control de Calidad</h3>
+        <p>Cada pieza pasa por un riguroso proceso de revisión dimensional y acabado superficial antes de enviarse.</p>
       </div>
     </div>
     
-    <button class="carousel-button next" (click)="nextSlide()" aria-label="Next product">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-      </svg>
-    </button>
-  </div>
-  
-  <div class="carousel-dots">
-    <span *ngFor="let dot of dots; let i = index" 
-          [class.active]="i === currentSlide"
-          (click)="goToSlide(i)"></span>
+    <div class="about-team">
+      <h3>Nuestro Equipo</h3>
+      <p>Ingenieros, diseñadores y artistas apasionados por la manufactura aditiva. ¡Nos encantan los desafíos complejos!</p>
+    </div>
   </div>
 </section>
 
-<section class="categories">
-  <h2>Explora por Categoría</h2>
-  <div class="category-grid">
-    <div class="category-card" *ngFor="let category of categories">
-      <img [src]="category.image" [alt]="category.name">
-      <h3>{{ category.name }}</h3>
+<section id="contact" class="animate__animated animate__fadeIn">
+  <div>
+    <h2>¿Listo para imprimir tu proyecto?</h2>
+    <p class="subtitle">Respondemos en menos de 24 horas</p>
+    
+    <div class="contact-container">
+      <!-- Formulario -->
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name">Nombre completo</label>
+          <input type="text" id="name" placeholder="Ej: María García" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" placeholder="ejemplo@email.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="project">Describe tu proyecto</label>
+          <textarea id="project" rows="4" placeholder="Ej: Necesito 50 piezas de 5x5cm en ABS..."></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Enviar consulta <mat-icon>send</mat-icon></button>
+      </form>
+      
+      <!-- Info adicional -->
+      <div class="contact-info">
+        <h3>Otras formas de contacto</h3>
+        <ul>
+          <li>📧 <a href="mailto:hola3dverse.com">hola3dverse.com</a></li>
+          <li>📱 <a href="https://wa.me/525512345678">WhatsApp: +52 55 1234 5678</a></li>
+          <li>🕒 Horario: Lunes a Viernes • 9:00 - 18:00</li>
+        </ul>
+        
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.888244509547!2d-99.1698389243386!3d19.427020481872934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff35f5bd1563%3A0x6c366f0e2de02ff7!2sPalacio%20de%20Bellas%20Artes!5e0!3m2!1sen!2smx!4v1712345678901!5m2!1sen!2smx" 
+            width="100%" 
+            height="250" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
     </div>
   </div>
 </section>

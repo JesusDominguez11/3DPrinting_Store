@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import { FooterComponent } from './components/footer/footer.component';
     MatIconModule,
     MatButtonModule          
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync(), // Añade esto para habilitar animaciones
+  ],
   bootstrap: []
 })
 export class AppModule { }

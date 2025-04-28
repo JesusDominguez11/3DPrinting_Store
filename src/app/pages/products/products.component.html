@@ -1,41 +1,91 @@
-<section class="products-page">
-    <div class="products-header">
-      <h1>Nuestro Catálogo Completo</h1>
-      <p>Descubre todas nuestras figuras 3D disponibles</p>
-      
-      <!-- Barra de búsqueda -->
-      <div class="search-bar">
-        <input 
-        type="text" 
-        [value]="searchTerm" 
-        (input)="updateSearchTerm($event)"
-        placeholder="Buscar productos..."
-        class="search-input">
+<div class="products-page-container">
+  <!-- Botón para móviles -->
+  <button class="sidebar-toggle" (click)="toggleSidebar()">
+    <mat-icon>{{isSidebarOpen ? 'close' : 'filter_alt'}}</mat-icon>
+    Filtros
+  </button>
+
+  <!-- Barra lateral de filtros -->
+  <aside class="filters-sidebar" [class.open]="isSidebarOpen">
+    <h3>Filtrar por</h3>
+    
+    <!-- Filtro de categorías -->
+    <div class="filter-section">
+      <h4>Categorías</h4>
+      <div class="filter-options">
+        <label *ngFor="let category of categories">
+          <input type="checkbox" 
+                 [checked]="selectedCategories.includes(category)"
+                 (change)="toggleCategory(category)">
+          <span class="checkmark"></span>
+          {{category}}
+        </label>
       </div>
     </div>
-  
-    <!-- Grid de productos -->
+
+    <!-- Filtro de precios -->
+    <div class="filter-section">
+      <h4>Rango de precios</h4>
+      <div class="price-range">
+        <div class="price-labels">
+          <span>${{priceRange.min | number:'1.0-0'}}</span>
+          <span>${{priceRange.max | number:'1.0-0'}}</span>
+        </div>
+        <input type="range" 
+               [min]="0" 
+               [max]="priceRange.max" 
+               (ngModel)="priceRange.min"
+               (change)="onPriceChange()">
+        <input type="range" 
+               [min]="0" 
+               [max]="priceRange.max" 
+               (ngModel)="priceRange.max"
+               (change)="onPriceChange()">
+      </div>
+    </div>
+
+    <!-- Filtro de tamaños -->
+    <div class="filter-section">
+      <h4>Tamaños</h4>
+      <div class="filter-options">
+        <label *ngFor="let size of sizes">
+          <input type="checkbox" 
+                 [checked]="selectedSizes.includes(size)"
+                 (change)="toggleSize(size)">
+          <span class="checkmark"></span>
+          {{size}}
+        </label>
+      </div>
+    </div>
+    <button class="clear-filters" (click)="clearFilters()">Limpiar filtros</button>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="products-content">
+    <div class="products-header">
+      <h1>Nuestro Catálogo Completo</h1>
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [value]="searchTerm" 
+          (input)="updateSearchTerm($event)"
+          placeholder="Buscar productos..."
+          class="search-input">
+      </div>
+    </div>
+
     <div class="products-grid">
       <app-product-card 
-        *ngFor="let product of paginatedProducts"
+        *ngFor="let product of filteredProducts"
         [product]="product"
-        (addToCart)="onAddToCart($event)"
-        class="product-item">
+        (addToCart)="onAddToCart($event)">
       </app-product-card>
     </div>
-  
-    <!-- Mensaje cuando no hay resultados -->
+
     <div class="no-results" *ngIf="filteredProducts.length === 0">
-      <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+      <mat-icon>search_off</mat-icon>
+      <p>No se encontraron productos con los filtros seleccionados.</p>
+      <button (click)="clearFilters()">Limpiar todos los filtros</button>
     </div>
-  
-    <!-- Paginación -->
-    <div class="pagination" *ngIf="filteredProducts.length > itemsPerPage">
-      <button 
-        *ngFor="let page of getPageNumbers()"
-        (click)="changePage(page)"
-        [class.active]="page === currentPage">
-        {{ page }}
-      </button>
-    </div>
-  </section>
+  </main>
+</div>

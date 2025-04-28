@@ -3,5 +3,7 @@ export interface Product {
     name: string;
     price: number;
     image: string;
-    description?: string; // Opcional
+    description: string; // Opcional
+    category: string;
+    size: string;
   }

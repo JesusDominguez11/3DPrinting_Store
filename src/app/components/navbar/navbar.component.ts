@@ -1,8 +1,8 @@
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
-import { Subscription } from 'rxjs';
-import { RouterModule, Router } from '@angular/router'; 
+import { filter, Subscription } from 'rxjs';
+import { RouterModule, Router, NavigationEnd } from '@angular/router'; 
 
 @Component({
   selector: 'app-navbar',
@@ -14,16 +14,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   activeSection: string = 'home';
   cartItemsCount: number = 0;
   private cartSubscription!: Subscription;
+  private routerSubscription!: Subscription;
   isCartPulsing = false;
+  currentRoute: string = '/';
 
-  constructor(private cartService: CartService,  private router: Router) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit() {
     // Suscripción a los cambios en el carrito
     this.cartSubscription = this.cartService.getTotalQuantity().subscribe({
       next: (count: number) => {
         this.cartItemsCount = count;
-        // Animación cuando se agrega un nuevo item
         if (count > this.cartItemsCount) {
           this.triggerCartAnimation();
         }
@@ -32,13 +33,71 @@ export class NavbarComponent implements OnInit, OnDestroy {
         console.error('Error al obtener items del carrito:', err);
       }
     });
+
+    // Suscripción a cambios de ruta
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.currentRoute = event.url;
+    });
   }
 
   ngOnDestroy() {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
+
+  // ... (otros métodos se mantienen igual)
+
+  scrollTo(sectionId: string) {
+    this.isMenuOpen = false;
+    
+    if (this.currentRoute !== '/') {
+      // Si no estamos en Home, navegamos primero a Home
+      this.router.navigate(['/'], { fragment: sectionId }).then(() => {
+        this.scrollToSection(sectionId);
+      });
+    } else {
+      // Si ya estamos en Home, hacemos scroll directamente
+      this.scrollToSection(sectionId);
+    }
+  }
+
+  private scrollToSection(sectionId: string) {
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offset = 80; // Ajusta según la altura de tu navbar
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100); // Pequeño delay para asegurar que la página está cargada
+  }
+
+  goToHome() {
+    this.router.navigate(['/']);
+  }
+  goToCart() {
+    this.router.navigate(['/cart']);  
+    
+  }
+
+
+
+
+
+
+
+
 
   triggerCartAnimation() {
     this.isCartPulsing = true;
@@ -62,26 +121,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  scrollTo(sectionId: string) {
-    this.isMenuOpen = false;
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
 
-  goToCart() {
-    // Implementa la navegación al carrito aquí
-    // console.log('Navegando al carrito');
-    this.router.navigate(['/cart']);  
-    
-  }
-
-  goToHome() {
-    this.router.navigate(['']);
-  }
-
-
+// metodos para el modo responsivo
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }

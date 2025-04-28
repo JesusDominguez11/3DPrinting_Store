@@ -1,21 +1,72 @@
-<h2>Tu Carrito</h2>
-
-<div *ngIf="(cartItems$ | async)?.length; else emptyCart">
-  <div class="cart-item" *ngFor="let item of cartItems$ | async">
-    <img [src]="item.image" [alt]="item.name" width="50">
-    <div>
-      <h3>{{ item.name }}</h3>
-      <p>${{ item.price | number:'1.2-2' }}</p>
+<section class="cart-container">
+  <div class="cart-header">
+    <h1>Tu Carrito de Compras</h1>
+    <button class="clear-cart" (click)="clearCart()" *ngIf="cartItems.length > 0">
+      <mat-icon>delete</mat-icon> Vaciar carrito
+    </button>
+  </div>
+  
+  <div class="cart-content">
+    <div class="cart-items" *ngIf="cartItems.length > 0; else emptyCart">
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <div class="item-image">
+          <img [src]="item.product.image" [alt]="item.product.name">
+        </div>
+        
+        <div class="item-details">
+          <h3>{{ item.product.name }}</h3>
+          <p class="price">{{ item.product.price | currency }}</p>
+          <div class="item-actions">
+            <div class="quantity-selector">
+              <button (click)="updateQuantity(item.product.id, item.quantity - 1)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="updateQuantity(item.product.id, item.quantity + 1)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <button class="remove-item" (click)="removeItem(item.product.id)">
+              <mat-icon>delete</mat-icon> Eliminar
+            </button>
+          </div>
+        </div>
+        
+        <div class="item-total">
+          {{ (item.product.price * item.quantity) | currency }}
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #emptyCart>
+      <div class="empty-cart">
+        <mat-icon>shopping_cart</mat-icon>
+        <p>Tu carrito está vacío</p>
+        <a routerLink="/products" class="btn-primary">Explorar productos</a>
+      </div>
+    </ng-template>
+    
+    <div class="cart-summary" *ngIf="cartItems.length > 0">
+      <h3>Resumen del Pedido</h3>
+      
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>{{ subtotal | currency }}</span>
+      </div>
+      
+      <div class="summary-row">
+        <span>Envío</span>
+        <span>{{ shippingCost | currency }}</span>
+      </div>
+      
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ total | currency }}</span>
+      </div>
+      
+      <button class="checkout-btn" (click)="checkout()">
+        Proceder al pago
+      </button>
     </div>
   </div>
-
-  <div class="cart-total">
-    <p>Total: <strong>${{ total | number:'1.2-2' }}</strong></p>
-    <button (click)="clearCart()">Vaciar Carrito</button>
-  </div>
-</div>
-
-<ng-template #emptyCart>
-  <p>Tu carrito está vacío</p>
-  <a routerLink="/">Volver a la tienda</a>
-</ng-template>
+</section>

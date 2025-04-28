@@ -3,44 +3,111 @@ import { Product } from '../models/product.model';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { NotificationService } from './notification.service';
 
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private cartItemsSubject = new BehaviorSubject<Product[]>([]);
+  private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   
   constructor(private notificationService: NotificationService) {}
 
-  // Métodos existentes (se mantienen igual)
-  getCartItems(): Observable<Product[]> {
+  // Obtener todos los items del carrito
+  getCartItems(): Observable<CartItem[]> {
     return this.cartItemsSubject.asObservable();
   }
 
-  getTotal(): Observable<number> {
+  // Obtener solo los productos (para compatibilidad con código existente)
+  getCartProducts(): Observable<Product[]> {
     return this.cartItemsSubject.pipe(
-      map(items => items.reduce((sum, item) => sum + item.price, 0))
+      map(items => items.map(item => item.product))
     );
   }
 
-  // Notificación al añadir producto (ya implementado)
-  addToCart(product: Product) {
-    const current = this.cartItemsSubject.value;
-    this.cartItemsSubject.next([...current, product]);
+  // Calcular el total
+  getTotal(): Observable<number> {
+    return this.cartItemsSubject.pipe(
+      map(items => items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0))
+    );
+  }
+
+  // Contar items únicos (para el badge)
+  getItemsCount(): Observable<number> {
+    return this.cartItemsSubject.pipe(
+      map(items => items.length)
+    );
+  }
+
+  // Contar cantidad total de productos (sumando cantidades)
+  getTotalQuantity(): Observable<number> {
+    return this.cartItemsSubject.pipe(
+      map(items => items.reduce((sum, item) => sum + item.quantity, 0))
+    );
+  }
+
+  // Añadir producto al carrito
+  addToCart(product: Product, quantity: number = 1) {
+    const currentItems = this.cartItemsSubject.value;
+    const existingItemIndex = currentItems.findIndex(item => item.product.id === product.id);
+
+    if (existingItemIndex > -1) {
+      // Si ya existe, incrementar cantidad
+      currentItems[existingItemIndex].quantity += quantity;
+    } else {
+      // Si no existe, añadir nuevo item
+      currentItems.push({ product, quantity });
+    }
+
+    this.cartItemsSubject.next([...currentItems]);
     
-    const cartElement = document.querySelector('.cart-floating');
-    
+    // Mostrar notificación
+    this.notificationService.show(
+      `✅ ${product.name} añadido al carrito (${quantity})`,
+      'success'
+    );
+
+    // Animación del carrito
+    const cartElement = document.querySelector('.cart-icon-button');
     if (cartElement) {
       cartElement.classList.add('pulse');
       setTimeout(() => {
         cartElement.classList.remove('pulse');
       }, 500);
     }
+  }
 
+  // Eliminar producto del carrito
+  removeFromCart(productId: string) {
+    const updatedItems = this.cartItemsSubject.value.filter(
+      item => item.product.id !== productId
+    );
+    this.cartItemsSubject.next(updatedItems);
+    
     this.notificationService.show(
-      `✅ ${product.name} añadido al carrito`,
-      'success'
+      '🗑️ Producto eliminado del carrito',
+      'info'
     );
   }
 
-  // Notificación al vaciar el carrito (nuevo)
+  // Actualizar cantidad de un producto
+  updateQuantity(productId: string, newQuantity: number) {
+    if (newQuantity < 1) {
+      this.removeFromCart(productId);
+      return;
+    }
+
+    const currentItems = this.cartItemsSubject.value;
+    const itemIndex = currentItems.findIndex(item => item.product.id === productId);
+
+    if (itemIndex > -1) {
+      currentItems[itemIndex].quantity = newQuantity;
+      this.cartItemsSubject.next([...currentItems]);
+    }
+  }
+
+  // Vaciar el carrito
   clearCart() {
     if (this.cartItemsSubject.value.length > 0) {
       this.cartItemsSubject.next([]);
@@ -50,28 +117,5 @@ export class CartService {
         2000
       );
     }
-  }
-
-  // Nuevo método para errores (ejemplo: validación de stock)
-  tryAddProduct(product: Product, availableStock: number): boolean {
-    if (availableStock <= 0) {
-      this.notificationService.show(
-        '❌ No hay suficiente stock disponible',
-        'error',
-        4000
-      );
-      return false;
-    }
-
-    if (availableStock < 3) { // Ejemplo: quedan pocas unidades
-      this.notificationService.show(
-        `⚠️ ¡Quedan solo ${availableStock} unidades!`,
-        'warning',
-        3000
-      );
-    }
-
-    this.addToCart(product);
-    return true;
   }
 }

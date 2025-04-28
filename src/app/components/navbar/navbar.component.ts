@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
 import { Subscription } from 'rxjs';
+import { RouterModule, Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-navbar',
@@ -15,15 +16,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private cartSubscription!: Subscription;
   isCartPulsing = false;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService,  private router: Router) {}
 
   ngOnInit() {
     // Suscripción a los cambios en el carrito
-    this.cartSubscription = this.cartService.getCartItems().subscribe({
-      next: (items: Product[]) => {
-        this.cartItemsCount = items.length;
+    this.cartSubscription = this.cartService.getTotalQuantity().subscribe({
+      next: (count: number) => {
+        this.cartItemsCount = count;
         // Animación cuando se agrega un nuevo item
-        if (items.length > this.cartItemsCount) {
+        if (count > this.cartItemsCount) {
           this.triggerCartAnimation();
         }
       },
@@ -71,7 +72,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   goToCart() {
     // Implementa la navegación al carrito aquí
-    console.log('Navegando al carrito');
+    // console.log('Navegando al carrito');
+    this.router.navigate(['/cart']);  
+    
+  }
+
+  goToHome() {
+    this.router.navigate(['']);
   }
 
 

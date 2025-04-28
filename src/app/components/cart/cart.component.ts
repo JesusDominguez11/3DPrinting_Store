@@ -1,35 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { Product } from '../../models/product.model';
-import { Observable } from 'rxjs';
-import { CommonModule, DecimalPipe } from '@angular/common'; 
+import { CartItem } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, DecimalPipe],
+  imports: [MatIcon, CurrencyPipe, CommonModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
-  cartItems$: Observable<Product[]>; // Usamos el sufijo $ para indicar que es un Observable
+export class CartComponent implements OnInit, OnDestroy {
+  cartItems: CartItem[] = [];
+  subtotal: number = 0;
+  shippingCost: number = 5.99; // Costo fijo de envío por ahora
   total: number = 0;
+  
+  private cartSubscription!: Subscription;
 
-  constructor(private cartService: CartService) {
-    this.cartItems$ = this.cartService.getCartItems();
-  }
+  constructor(private cartService: CartService) { }
 
-  ngOnInit() {
-    this.cartItems$.subscribe(items => {
-      this.total = this.calculateTotal(items);
+  ngOnInit(): void {
+    this.cartSubscription = this.cartService.getCartItems().subscribe(items => {
+      this.cartItems = items;
+      this.calculateTotals();
     });
   }
 
-  calculateTotal(items: Product[]): number {
-    return items.reduce((sum, item) => sum + item.price, 0);
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
   }
 
-  clearCart() {
+  calculateTotals(): void {
+    this.subtotal = this.cartItems.reduce(
+      (sum, item) => sum + (item.product.price * item.quantity), 
+      0
+    );
+    this.total = this.subtotal + this.shippingCost;
+  }
+
+  updateQuantity(productId: string, newQuantity: number): void {
+    this.cartService.updateQuantity(productId, newQuantity);
+  }
+
+  removeItem(productId: string): void {
+    this.cartService.removeFromCart(productId);
+  }
+
+  clearCart(): void {
     this.cartService.clearCart();
+  }
+
+  checkout(): void {
+    // Aquí implementarías la lógica de checkout
+    console.log('Proceder al pago', this.cartItems);
+    // this.router.navigate(['/checkout']);
   }
 }

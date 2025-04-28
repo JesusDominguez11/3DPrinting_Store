@@ -3,10 +3,13 @@ import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
 import { filter, Subscription } from 'rxjs';
 import { RouterModule, Router, NavigationEnd } from '@angular/router'; 
+import { NavigationService } from '../../services/navigation.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
+  imports: [CommonModule],
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
@@ -18,7 +21,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isCartPulsing = false;
   currentRoute: string = '/';
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService, private router: Router, private navigation: NavigationService) {}
+
+// servicio de navegacion centralizada
+  navItems = [
+    { path: '/', fragment: 'home', label: 'Inicio' },
+    { path: '/', fragment: 'categories', label: 'Categorías' },
+    { path: '/products', label: 'Productos' },
+    { path: '/', fragment: 'about-us', label: 'Nosotros' },
+    { path: '/', fragment: 'contact', label: 'Contacto' }
+  ];
+
+  navigateTo(path: string, fragment?: string): void {
+    this.navigation.navigateTo(path, fragment);
+    this.isMenuOpen = false;
+  }
+
+
 
   ngOnInit() {
     // Suscripción a los cambios en el carrito

@@ -1,8 +1,8 @@
 import { Component, OnDestroy  } from '@angular/core';
 import { CartService } from './services/cart.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router'; 
-import { Subscription } from 'rxjs'; // Para manejar la suscripción
+import { RouterModule, Router, NavigationEnd } from '@angular/router'; 
+import { filter, Subscription } from 'rxjs'; // Para manejar la suscripción
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -20,11 +20,21 @@ export class AppComponent {
     private cartService: CartService,
     private router: Router
   ) {
+
+    //para manejar el numero de items en el carrito
     this.cartService.getCartItems().subscribe(items => {
       this.cartItemCount = items.length;
     });
+
+    //para manejar la posicion en la pagina al cambiar de paginas
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      window.scrollTo(0, 0);
+    });
   }
 
+  //para navegar al carrito (depurar si aun es necesario esto)
   navigateToCart() {
     this.router.navigate(['/cart']);
   }

@@ -3,7 +3,7 @@
     <!-- brand -->
     <div id="nav-brand">
       <button class="cart-icon-button" 
-            (click)="goToHome()">
+      (click)="navigateTo('/')">
           <a routerLink="/home">
         <span>3DVerse</span>
       </a>
@@ -13,16 +13,17 @@
     <!-- menu -->
     <div id="nav-menu" [class.active]="isMenuOpen">
       <ul>
-        <li><a (click)="scrollTo('home')" [class.active]="activeSection === 'home'">Inicio</a></li>
-        <li><a (click)="scrollTo('categories')" [class.active]="activeSection === 'categories'">Categorías</a></li>
-        <li><a (click)="scrollTo('about-us')" [class.active]="activeSection === 'about-us'">Sobre nosotros</a></li>
-        <li><a (click)="scrollTo('contact')" [class.active]="activeSection === 'contact'">Contacto</a></li>
+<li *ngFor="let item of navItems">
+          <a (click)="navigateTo(item.path, item.fragment)" [class.active]="activeSection === item.fragment ">
+            {{item.label}}
+          </a>
+        </li>
       </ul>
     </div>
 
     <!-- cart -->
     <button class="cart-icon-button" 
-            (click)="goToCart()" 
+    (click)="navigateTo('/cart', 'cart-container')" 
             aria-label="Carrito de compras"
             [class.pulse]="isCartPulsing">
       <svg class="cart-icon" viewBox="0 0 24 24">

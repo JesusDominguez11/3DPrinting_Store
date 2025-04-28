@@ -12,7 +12,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'enabled', // Habilitar restauración de posición
+    scrollPositionRestoration: 'enabled', // Habilitar restauración de posición //cambiar entre top y enabled segun
     anchorScrolling: 'enabled', // Habilitar scroll a anclas
     onSameUrlNavigation: 'reload' // Permitir recarga en misma URL
   })],

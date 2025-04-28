@@ -4,11 +4,12 @@ import { CartItem } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [MatIcon, CurrencyPipe, CommonModule],
+  imports: [MatIcon, CurrencyPipe, CommonModule ],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
@@ -20,7 +21,11 @@ export class CartComponent implements OnInit, OnDestroy {
   
   private cartSubscription!: Subscription;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private navigation: NavigationService) { }
+
+  exploreProducts(): void {
+    this.navigation.navigateTo('/products');
+  }
 
   ngOnInit(): void {
     this.cartSubscription = this.cartService.getCartItems().subscribe(items => {

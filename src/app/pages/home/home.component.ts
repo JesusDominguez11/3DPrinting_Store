@@ -5,10 +5,11 @@ import { ProductService } from '../../services/product.service';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { Route, RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, ProductCardComponent, MatIcon],
+  imports: [CommonModule, ProductCardComponent, MatIcon, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

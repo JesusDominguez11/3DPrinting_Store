@@ -34,7 +34,7 @@
 <section id="categories" class="animate__animated animate__fadeIn">
   <h2>Explora por Categoría</h2>
   <div class="categories-container">
-    <div *ngFor="let category of categories" class="category-card">
+    <div *ngFor="let category of categories" class="category-card" routerLink="/products">
       <img [src]="category.image" [alt]="category.name" class="category-image">
       <h3>{{ category.name }}</h3>
     </div>

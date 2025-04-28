@@ -42,7 +42,9 @@
       <div class="empty-cart">
         <mat-icon>shopping_cart</mat-icon>
         <p>Tu carrito está vacío</p>
-        <a routerLink="/products" class="btn-primary">Explorar productos</a>
+        <button (click)="exploreProducts()" class="btn-primary">
+          Explorar productos
+        </button>
       </div>
     </ng-template>
     

@@ -6,6 +6,6 @@
   
   .main-content {
     flex: 1;
-    padding-top: 80px; /* Ajusta según la altura de tu navbar */
-    padding-bottom: 60px; /* Ajusta según la altura de tu footer */
+    /* padding-top: 80px; Ajusta según la altura de tu navbar */
+    /* padding-bottom: 60px; Ajusta según la altura de tu footer */
   }

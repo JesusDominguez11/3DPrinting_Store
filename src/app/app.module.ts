@@ -13,13 +13,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ProductsComponent } from './pages/products/products.component';
 
 @NgModule({
   declarations: [
 
   
     NavbarComponent,
-         FooterComponent
+         FooterComponent,
+         ProductsComponent
   ],
   imports: [
     BrowserModule,

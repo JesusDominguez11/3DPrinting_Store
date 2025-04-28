@@ -3,10 +3,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { CartComponent } from './components/cart/cart.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ProductsComponent } from './pages/products/products.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, runGuardsAndResolvers: 'always' },
-  { path: 'cart', component: CartComponent }
+  { path: 'cart', component: CartComponent },
+  { path: 'products', component: ProductsComponent }
 ];
 
 
@@ -19,3 +21,4 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

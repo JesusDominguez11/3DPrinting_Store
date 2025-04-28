@@ -1,0 +1,41 @@
+<section class="products-page">
+    <div class="products-header">
+      <h1>Nuestro Catálogo Completo</h1>
+      <p>Descubre todas nuestras figuras 3D disponibles</p>
+      
+      <!-- Barra de búsqueda -->
+      <div class="search-bar">
+        <input 
+        type="text" 
+        [value]="searchTerm" 
+        (input)="updateSearchTerm($event)"
+        placeholder="Buscar productos..."
+        class="search-input">
+      </div>
+    </div>
+  
+    <!-- Grid de productos -->
+    <div class="products-grid">
+      <app-product-card 
+        *ngFor="let product of paginatedProducts"
+        [product]="product"
+        (addToCart)="onAddToCart($event)"
+        class="product-item">
+      </app-product-card>
+    </div>
+  
+    <!-- Mensaje cuando no hay resultados -->
+    <div class="no-results" *ngIf="filteredProducts.length === 0">
+      <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+    </div>
+  
+    <!-- Paginación -->
+    <div class="pagination" *ngIf="filteredProducts.length > itemsPerPage">
+      <button 
+        *ngFor="let page of getPageNumbers()"
+        (click)="changePage(page)"
+        [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+    </div>
+  </section>

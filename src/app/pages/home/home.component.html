@@ -14,19 +14,9 @@
   </div>
 
   <div id="featured-products" class="animate__animated animate__fadeIn">
-
-
-          <!-- <app-product-card 
-            *ngFor="let product of featuredProducts"
-            [product]="product"
-            (addToCart)="onAddToCart($event)"
-            class="carousel-item">
-          </app-product-card> -->
-        
-        
           
             <h2>Productos Destacados</h2>
-            <swiper-container class="mySwiper" space-between="30" pagination="true" pagination-clickable="true">
+            <swiper-container class="mySwiper"  navigation="true" space-between="30" pagination="true" pagination-clickable="true" loop="true">
               <swiper-slide *ngFor="let product of featuredProducts">
                 <app-product-card 
                   [product]="product"
@@ -36,12 +26,6 @@
               </swiper-slide>
             </swiper-container>
           
-          
-        
-          
-        
-          
-      
   </div>
   
 </section>

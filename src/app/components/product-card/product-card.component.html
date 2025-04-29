@@ -1,12 +1,14 @@
 
 <div class="product-card">
-  <div class="product-image-container">
+  <div class="product-image-container" (click)="navigateToProduct()">
     <img [src]="product.image" [alt]="product.name" class="product-image" loading="lazy">
   </div>
   
   <div class="product-info">
-    <h3 class="product-title">{{ product.name }}</h3>
+    <div (click)="navigateToProduct()">
+      <h3 class="product-title">{{ product.name }}</h3>
     <p class="product-description">{{ product.description || 'Figura coleccionable premium' }}</p>
+    </div>
     
     <div class="product-footer">
       <span class="product-price">${{ product.price | number:'1.2-2' }}</span>

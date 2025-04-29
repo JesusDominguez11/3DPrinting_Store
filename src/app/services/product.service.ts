@@ -56,4 +56,20 @@ export class ProductService {
   getSizes(): string[] {
     return this.sizes;
   }
+
+  // products.service.ts
+getProductById(id: string): Product {
+  const product = this.products.find(p => p.id === id);
+  if (!product) {
+    throw new Error(`Product with id ${id} not found`);
+  }
+  return product;
+}
+
+getRelatedProducts(currentProductId: string): Product[] {
+  const currentProduct = this.getProductById(currentProductId);
+  return this.products
+    .filter(p => p.id !== currentProductId && p.category === currentProduct.category)
+    .slice(0, 4); // Limita a 4 productos relacionados
+}
 }

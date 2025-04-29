@@ -1,0 +1,32 @@
+<!-- product-detail.component.html -->
+<section class="product-detail-container">
+    <div class="product-detail">
+      <div class="product-images">
+        <img [src]="product.image" [alt]="product.name" class="main-image">
+      </div>
+      
+      <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        <div class="price">${{ product.price | number:'1.2-2' }}</div>
+        
+        <div class="description">
+          <h3>Descripción</h3>
+          <p>{{ product.description }}</p>
+        </div>
+        
+        <button (click)="addToCart()" class="add-to-cart-btn">
+          Añadir al carrito
+        </button>
+      </div>
+    </div>
+  
+    <div class="related-products" *ngIf="relatedProducts.length > 0">
+      <h2>Productos relacionados</h2>
+      <div class="related-grid">
+        <app-product-card 
+          *ngFor="let product of relatedProducts"
+          [product]="product">
+        </app-product-card>
+      </div>
+    </div>
+  </section>

@@ -11,7 +11,7 @@ export class ProductService {
       image: 'assets/images/products/01_hatsune_miku-removebg-preview.png',
       description: 'Figura detallada de hatsune miku estilo funko.',
       category: 'anime',
-      size: '18'
+      size: 'Mediano (15-20cm)'
     },
     {
       id: '2',
@@ -20,7 +20,7 @@ export class ProductService {
       image: 'assets/images/products/02_happy_ghast-removebg-preview.png',
       description: 'Figura de Happy Ghast de Minecraft.',
       category: 'videogames',
-      size: '21'
+      size: 'Grande (25-30cm)'
     },
     {
       id: '3',
@@ -29,7 +29,7 @@ export class ProductService {
       image: 'assets/images/products/03_pingu-removebg-preview.png',
       description: 'Figura de pingu.',
       category: 'custom',
-      size: '12'
+      size: 'Pequeño (5-10cm)'
     },
     {
       id: '4',
@@ -38,7 +38,7 @@ export class ProductService {
       image: 'assets/images/products/04_bmo-removebg-preview.png',
       description: 'Figura de BMO de hora de aventura.',
       category: 'custom',
-      size: '24'
+      size: 'Mediano (15-20cm)'
     }
   ];
 

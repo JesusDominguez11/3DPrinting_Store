@@ -28,19 +28,19 @@
       <h4>Rango de precios</h4>
       <div class="price-range">
         <div class="price-labels">
-          <span>${{priceRange.min | number:'1.0-0'}}</span>
-          <span>${{priceRange.max | number:'1.0-0'}}</span>
+          <span>${{currentPriceRange.min | number:'1.0-0'}}</span>
+          <span>${{currentPriceRange.max | number:'1.0-0'}}</span>
         </div>
         <input type="range" 
-               [min]="0" 
+               [min]="priceRange.min" 
                [max]="priceRange.max" 
-               (ngModel)="priceRange.min"
-               (change)="onPriceChange()">
+               [value]="currentPriceRange.min"
+               (input)="updatePrice('min', $event)">
         <input type="range" 
-               [min]="0" 
+               [min]="priceRange.min" 
                [max]="priceRange.max" 
-               (ngModel)="priceRange.max"
-               (change)="onPriceChange()">
+               [value]="currentPriceRange.max"
+               (input)="updatePrice('max', $event)">
       </div>
     </div>
 
@@ -62,16 +62,13 @@
 
   <!-- Contenido principal -->
   <main class="products-content">
-    <div class="products-header">
-      <h1>Nuestro Catálogo Completo</h1>
-      <div class="search-bar">
-        <input 
-          type="text" 
-          [value]="searchTerm" 
-          (input)="updateSearchTerm($event)"
-          placeholder="Buscar productos..."
-          class="search-input">
-      </div>
+    <div class="search-bar">
+      <input 
+        type="text" 
+        (input)="updateSearchTerm($event)"
+        (ngModelChange)="applyFilters()"
+        placeholder="Buscar productos..."
+        class="search-input">
     </div>
 
     <div class="products-grid">

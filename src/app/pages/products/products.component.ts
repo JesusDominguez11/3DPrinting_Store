@@ -29,12 +29,30 @@ export class ProductsComponent {
   selectedCategories: string[] = [];
   selectedSizes: string[] = [];
   priceRange = { min: 0, max: 200 };
+  currentPriceRange = { min: 0, max: 200 };
 
     // Estado sidebar
-  isSidebarOpen = true;
+  isSidebarOpen = false;
 
-  updateSearchTerm(event: Event): void {
-    this.searchTerm = (event.target as HTMLInputElement).value;
+// Actualiza el término de búsqueda
+updateSearchTerm(event: Event): void {
+  this.searchTerm = (event.target as HTMLInputElement).value;
+  this.applyFilters();
+}
+
+  // Método para actualizar precios de manera segura
+  updatePrice(type: 'min' | 'max', event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const value = parseFloat(inputElement.value);
+    
+    if (!isNaN(value)) {
+      if (type === 'min') {
+        this.currentPriceRange.min = value;
+      } else {
+        this.currentPriceRange.max = value;
+      }
+      this.applyFilters();
+    }
   }
 
   constructor(
@@ -45,6 +63,8 @@ export class ProductsComponent {
     this.filteredProducts = [...this.products];
     this.categories = this.productService.getCategories();
     this.sizes = this.productService.getSizes();
+    this.calculatePriceRange();
+    this.applyFilters();
 
     // Inicializar con el rango de precios real
     this.priceRange.max = Math.max(...this.products.map(p => p.price));
@@ -54,37 +74,50 @@ export class ProductsComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+    // Calcula el rango de precios real de los productos
+    calculatePriceRange(): void {
+      if (this.products.length > 0) {
+        const prices = this.products.map(p => p.price);
+        this.priceRange.min = Math.min(...prices);
+        this.priceRange.max = Math.max(...prices);
+        this.currentPriceRange = { ...this.priceRange };
+      }
+    }
+  
+
+  // Aplica todos los filtros
   applyFilters(): void {
     this.filteredProducts = this.products.filter(product => {
-      // Filtro por texto
-      const matchesSearch = !this.searchTerm || 
+      // Filtro por término de búsqueda
+      const matchesSearch = this.searchTerm === '' || 
         product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
-        product.description.toLowerCase().includes(this.searchTerm.toLowerCase());
+        (product.description && product.description.toLowerCase().includes(this.searchTerm.toLowerCase()));
       
       // Filtro por categoría
       const matchesCategory = this.selectedCategories.length === 0 || 
-        this.selectedCategories.includes(product.category);
+        this.selectedCategories.includes(product.category || '');
       
       // Filtro por tamaño
       const matchesSize = this.selectedSizes.length === 0 || 
-        this.selectedSizes.includes(product.size);
+        this.selectedSizes.includes(product.size || '');
       
       // Filtro por precio
-      const matchesPrice = product.price >= this.priceRange.min && 
-        product.price <= this.priceRange.max;
+      const matchesPrice = product.price >= this.currentPriceRange.min && 
+        product.price <= this.currentPriceRange.max;
       
       return matchesSearch && matchesCategory && matchesSize && matchesPrice;
     });
   }
 
+  
+
+
+  // Restablece todos los filtros
   clearFilters(): void {
     this.searchTerm = '';
     this.selectedCategories = [];
     this.selectedSizes = [];
-    this.priceRange = { 
-      min: 0, 
-      max: Math.max(...this.products.map(p => p.price)) 
-    };
+    this.currentPriceRange = { ...this.priceRange };
     this.applyFilters();
   }
 
@@ -108,6 +141,7 @@ export class ProductsComponent {
     this.applyFilters();
   }
 
+  // Maneja cambios en el rango de precios
   onPriceChange(): void {
     this.applyFilters();
   }

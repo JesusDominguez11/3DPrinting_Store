@@ -39,6 +39,18 @@ export class ProductService {
       description: 'Figura de BMO de hora de aventura.',
       category: 'custom',
       size: 'Mediano (15-20cm)'
+    },
+    {
+      id: '5',
+      name: 'Minecraft Dog',
+      price: 79.99,
+      images: [
+        'assets/images/products/0006_Minecraft dog_fixed/img/0002.png'
+        // 'assets/images/products/0006_Minecraft dog_fixed/img/0001.png'
+      ],
+      description: 'Figura de perro de minecraft',
+      category: 'videogames',
+      size: 'Mediano (15-20cm)'
     }
   ];
 

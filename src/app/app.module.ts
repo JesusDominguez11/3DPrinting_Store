@@ -19,11 +19,7 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
 @NgModule({
   declarations: [
 
-  
-    NavbarComponent,
-         FooterComponent,
-         ProductsComponent,
-         ProductDetailComponent
+
   ],
   imports: [
     BrowserModule,
@@ -36,7 +32,12 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatButtonModule          
+    MatButtonModule,
+    
+    NavbarComponent,
+    FooterComponent,
+    ProductsComponent,
+    ProductDetailComponent
   ],
   providers: [
     provideAnimationsAsync(), // Añade esto para habilitar animaciones

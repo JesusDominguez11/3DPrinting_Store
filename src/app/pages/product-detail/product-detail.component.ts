@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -11,7 +12,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
-
 })
 export class ProductDetailComponent implements OnInit {
   product!: Product;

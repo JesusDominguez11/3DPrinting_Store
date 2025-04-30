@@ -1,7 +1,7 @@
 
 <div class="product-card">
   <div class="product-image-container" (click)="navigateToProduct()">
-    <img [src]="product.images" [alt]="product.name" class="product-image" loading="lazy">
+    <img [src]="product.images[0]" [alt]="product.name" class="product-image" loading="lazy">
   </div>
   
   <div class="product-info">

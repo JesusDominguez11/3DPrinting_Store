@@ -45,8 +45,8 @@ export class ProductService {
       name: 'Minecraft Dog',
       price: 79.99,
       images: [
+        'assets/images/products/0006_Minecraft dog_fixed/img/0001.png',
         'assets/images/products/0006_Minecraft dog_fixed/img/0002.png'
-        // 'assets/images/products/0006_Minecraft dog_fixed/img/0001.png'
       ],
       description: 'Figura de perro de minecraft',
       category: 'videogames',

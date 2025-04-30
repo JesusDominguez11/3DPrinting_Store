@@ -6,12 +6,12 @@ import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-product-detail',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule]
+  styleUrls: ['./product-detail.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
 })
 export class ProductDetailComponent implements OnInit {
   product!: Product;

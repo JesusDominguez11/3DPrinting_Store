@@ -16,12 +16,15 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
 
   
 
+  
+    
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { LoginComponent } from './pages/login/login.component';
     FooterComponent,
     ProductsComponent,
     ProductDetailComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   providers: [
     provideAnimationsAsync(), // Añade esto para habilitar animaciones

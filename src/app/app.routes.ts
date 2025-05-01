@@ -6,14 +6,15 @@ import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, runGuardsAndResolvers: 'always' },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'products/:id', component: ProductDetailComponent },
-  { path: 'login', component: LoginComponent }
-  // { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 ];
 
 

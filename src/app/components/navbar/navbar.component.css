@@ -159,32 +159,6 @@ nav {
 
 
 
-/* Menú hamburguesa */
-/* #nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 1001;
-}
-
-#nav-toggle {
-  display: flex !important;
-}
-
-.hamburger-line {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--text-color);
-  margin: 5px 0;
-  transition: var(--transition);
-} */
-
-
-
-
 
 /* Responsive */
 @media (max-width: 768px) {

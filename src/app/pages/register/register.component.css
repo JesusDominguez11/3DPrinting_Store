@@ -1,25 +1,20 @@
-/* Estilos generales */
+/* Estilos generales - consistentes con login */
 :host {
     display: block;
-    height: 100vh;
+    height: calc(100vh - 70px);
   }
   
-  .login-wrapper {
+  .register-wrapper {
     display: flex;
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-top: 70px;
   }
-
-  #login-wrapper h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-  }
   
-  /* Tarjeta de login */
-  .login-card {
+  /* Tarjeta de registro - misma base que login */
+  .register-card {
     width: 100%;
-    max-width: 450px;
+    max-width: 550px;
     padding: 2.5rem;
     display: flex;
     flex-direction: column;
@@ -39,6 +34,7 @@
     border: none;
     cursor: pointer;
     position: relative;
+    margin-top: 10rem;
     margin-bottom: 2rem;
     transition: var(--transition);
   }
@@ -74,7 +70,7 @@
   }
   
   /* Formulario */
-  .login-form {
+  .register-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -140,36 +136,30 @@
     color: #7f8c8d;
   }
   
-  /* Opciones del formulario */
-  .form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-  }
-  
-  .remember-me {
+  /* Estilos específicos para el checkbox de términos */
+  .terms-checkbox {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 0.85rem;
     color: #34495e;
     cursor: pointer;
+    margin-top: 0.5rem;
   }
   
-  .forgot-password {
+  .terms-link {
     color: #3498db;
     text-decoration: none;
-    cursor: pointer;
   }
   
-  .forgot-password:hover {
+  .terms-link:hover {
     text-decoration: underline;
   }
   
-  /* Botón de login */
-  .login-button {
+  /* Botón de registro - mismo estilo pero color diferente */
+  .register-button {
     padding: 12px;
-    background-color: #3498db;
+    background-color: #2ecc71; /* Verde en lugar de azul */
     color: white;
     border: none;
     border-radius: 6px;
@@ -179,15 +169,16 @@
     transition: background-color 0.3s ease;
   }
   
-  .login-button:hover:not(:disabled) {
-    background-color: #2980b9;
+  .register-button:hover:not(:disabled) {
+    background-color: #27ae60; /* Verde más oscuro al hover */
   }
   
-  .login-button:disabled {
+  .register-button:disabled {
     background-color: #bdc3c7;
     cursor: not-allowed;
   }
   
+  /* Spinner igual que en login */
   .loading-spinner {
     display: inline-block;
     width: 20px;
@@ -202,7 +193,7 @@
     to { transform: rotate(360deg); }
   }
   
-  /* Mensajes de error */
+  /* Mensajes de error - igual que login */
   .error-message {
     display: flex;
     align-items: center;
@@ -224,40 +215,68 @@
     margin-top: 1rem;
   }
   
-  /* Enlace de registro */
-  .register-link {
+  /* Enlace a login - similar al de registro en login */
+  .login-link {
     text-align: center;
     font-size: 0.9rem;
     color: #7f8c8d;
     margin-top: 1rem;
   }
   
-  .register-link a {
+  .login-link a {
     color: #3498db;
     text-decoration: none;
     cursor: pointer;
   }
   
-  .register-link a:hover {
+  .login-link a:hover {
     text-decoration: underline;
   }
   
-  /* Imagen decorativa */
-  .login-image {
+  /* Imagen decorativa - igual que login */
+  .register-image {
     flex: 1;
     background: linear-gradient(135deg, #3498db, #2c3e50);
     background-size: contain;
-    /* display: none; */
   }
   
-  /* Responsive */
+  /* Efecto de desplazamiento */
+  .register-wrapper.reverse-layout {
+    flex-direction: row-reverse;
+  }
+  
+  /* Responsive - igual que login */
   @media (min-width: 992px) {
-    .login-card {
+    .register-card {
       width: 550px;
       max-width: 550px;
     }
     
-    .login-image {
+    .register-image {
       display: block;
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

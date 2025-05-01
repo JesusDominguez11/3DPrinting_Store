@@ -5,6 +5,7 @@ import { filter, Subscription } from 'rxjs';
 import { RouterModule, Router, NavigationEnd } from '@angular/router'; 
 import { NavigationService } from '../../services/navigation.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isCartPulsing = false;
   currentRoute: string = '/';
 
-  constructor(private cartService: CartService, private router: Router, private navigation: NavigationService) {}
+  private authSubscription!: Subscription;
+  isAuthenticated = false;
+  userName = '';
+
+
+  constructor(private cartService: CartService, 
+    private router: Router, 
+    private navigation: NavigationService,
+    private authService: AuthService
+  ) {}
 
 // servicio de navegacion centralizada
   navItems = [
@@ -59,6 +69,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ).subscribe((event: any) => {
       this.currentRoute = event.url;
     });
+
+        // Suscripción a cambios de autenticación
+        this.authSubscription = this.authService.currentUser.subscribe(user => {
+          this.isAuthenticated = user !== null;
+          this.userName = user?.name || '';
+        });
   }
 
   ngOnDestroy() {
@@ -68,6 +84,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.isMenuOpen = false;
   }
 
   // ... (otros métodos se mantienen igual)

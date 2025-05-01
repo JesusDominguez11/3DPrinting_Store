@@ -1,0 +1,282 @@
+/* Estilos generales - consistentes con login */
+:host {
+    display: block;
+    height: calc(100vh - 70px);
+  }
+  
+  .register-wrapper {
+    display: flex;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 70px;
+  }
+  
+  /* Tarjeta de registro - misma base que login */
+  .register-card {
+    width: 100%;
+    max-width: 550px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  #brand button {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+  
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    margin-top: 10rem;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+  }
+  
+  .brand-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .brand-logo img {
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+  
+  .brand-logo h1 {
+    color: #333;
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  h2 {
+    color: #2c3e50;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .subtitle {
+    color: #7f8c8d;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Formulario */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    color: #34495e;
+    font-weight: 500;
+  }
+  
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    width: 20px;
+    height: 20px;
+    color: #7f8c8d;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+  
+  input.invalid {
+    border-color: #e74c3c;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .toggle-password svg {
+    width: 20px;
+    height: 20px;
+    color: #7f8c8d;
+  }
+  
+  /* Estilos específicos para el checkbox de términos */
+  .terms-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #34495e;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  
+  .terms-link {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .terms-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Botón de registro - mismo estilo pero color diferente */
+  .register-button {
+    padding: 12px;
+    background-color: #2ecc71; /* Verde en lugar de azul */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover:not(:disabled) {
+    background-color: #27ae60; /* Verde más oscuro al hover */
+  }
+  
+  .register-button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  
+  /* Spinner igual que en login */
+  .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Mensajes de error - igual que login */
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+  
+  .error-message svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .server-error {
+    padding: 10px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: 4px;
+    margin-top: 1rem;
+  }
+  
+  /* Enlace a login - similar al de registro en login */
+  .login-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 1rem;
+  }
+  
+  .login-link a {
+    color: #3498db;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Imagen decorativa - igual que login */
+  .register-image {
+    flex: 1;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    background-size: contain;
+  }
+  
+  /* Efecto de desplazamiento */
+  .register-wrapper.reverse-layout {
+    flex-direction: row-reverse;
+  }
+  
+  /* Responsive - igual que login */
+  @media (min-width: 992px) {
+    .register-card {
+      width: 550px;
+      max-width: 550px;
+    }
+    
+    .register-image {
+      display: block;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

@@ -1,0 +1,93 @@
+<div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand-logo">
+        <img src="assets/logo.svg" alt="3DVerse Logo">
+        <h1>3DVerse</h1>
+      </div>
+  
+      <h2>Bienvenido de vuelta</h2>
+      <p class="subtitle">Ingresa tus credenciales para acceder a tu cuenta</p>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="form-group">
+          <label for="username">Nombre de usuario</label>
+          <div class="input-container">
+            <svg class="input-icon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+            </svg>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="username"
+              placeholder="tu.usuario"
+              [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+            >
+          </div>
+          <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" 
+               class="error-message">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/>
+            </svg>
+            Por favor ingresa tu nombre de usuario
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <div class="input-container">
+            <svg class="input-icon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/>
+            </svg>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password"
+              placeholder="••••••••"
+              [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            >
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+              <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"/>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" 
+               class="error-message">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/>
+            </svg>
+            Por favor ingresa tu contraseña
+          </div>
+        </div>
+  
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" formControlName="rememberMe">
+            <span>Recordar mi sesión</span>
+          </label>
+          <a class="forgot-password" (click)="navigateToRecovery()">¿Olvidaste tu contraseña?</a>
+        </div>
+  
+        <button type="submit" class="login-button" [disabled]="loginForm.invalid || isLoading">
+          <span *ngIf="!isLoading">Iniciar Sesión</span>
+          <span *ngIf="isLoading" class="loading-spinner"></span>
+        </button>
+  
+        <div *ngIf="errorMessage" class="error-message server-error">
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/>
+          </svg>
+          {{errorMessage}}
+        </div>
+  
+        <div class="register-link">
+          ¿No tienes una cuenta? <a (click)="navigateToRegister()">Regístrate</a>
+        </div>
+      </form>
+    </div>
+  
+    <div class="login-image">
+      <!-- Aquí podrías colocar una imagen decorativa -->
+       <!-- <img src="assets/images/hero-bg.jpg" alt=""> -->
+    </div>
+  </div>

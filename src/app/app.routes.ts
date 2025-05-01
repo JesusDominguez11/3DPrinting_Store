@@ -5,12 +5,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, runGuardsAndResolvers: 'always' },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductsComponent },
-  { path: 'products/:id', component: ProductDetailComponent }
+  { path: 'products/:id', component: ProductDetailComponent },
+  { path: 'login', component: LoginComponent }
+  // { path: 'register', component: RegisterComponent },
 ];
 
 

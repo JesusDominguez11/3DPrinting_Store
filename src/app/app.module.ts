@@ -15,15 +15,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
 
   
-    NavbarComponent,
-         FooterComponent,
-         ProductsComponent,
-         ProductDetailComponent
+
   ],
   imports: [
     BrowserModule,
@@ -36,7 +34,13 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatButtonModule          
+    MatButtonModule,
+
+    NavbarComponent,
+    FooterComponent,
+    ProductsComponent,
+    ProductDetailComponent,
+    LoginComponent
   ],
   providers: [
     provideAnimationsAsync(), // Añade esto para habilitar animaciones

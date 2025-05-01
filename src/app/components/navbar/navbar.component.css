@@ -278,7 +278,7 @@ nav {
 
 
 
-
+/* 
 .user-menu {
   position: relative;
 }
@@ -311,4 +311,87 @@ nav {
   display: block;
   color: #333;
   text-decoration: none;
+} */
+
+
+
+/* User icon styles */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
+
+.user-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: var(--transition);
+}
+
+.user-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.user-icon-button:hover .user-icon {
+  color: var(--primary);
+}
+
+/* User dropdown menu */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 200px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+}
+
+.user-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.user-dropdown button:hover {
+  color: var(--primary);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-icons {
+    order: 2;
+  }
+  
+  .user-dropdown {
+    right: 1rem;
+  }
+}
+
+
+
+

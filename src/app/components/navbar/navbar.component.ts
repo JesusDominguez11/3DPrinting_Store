@@ -25,6 +25,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private authSubscription!: Subscription;
   isAuthenticated = false;
   userName = '';
+  isUserMenuOpen: boolean = false;
+  isLoggedIn: boolean = this.isAuthenticated;
 
 
   constructor(private cartService: CartService, 
@@ -169,6 +171,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
+  toggleUserMenu() {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+    }
 
   closeMenu() {
     this.isMenuOpen = false;

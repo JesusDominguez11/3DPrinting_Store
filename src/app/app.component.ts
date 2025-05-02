@@ -5,6 +5,7 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter, Subscription } from 'rxjs'; // Para manejar la suscripción
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,12 @@ export class AppComponent {
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private api: ApiService
   ) {
+
+    
+    this.testApiConnection();
 
     //para manejar el numero de items en el carrito
     this.cartService.getCartItems().subscribe(items => {
@@ -31,6 +36,17 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       window.scrollTo(0, 0);
+    });
+  }
+
+  testApiConnection() {
+    this.api.testConnection().subscribe({
+      next: (response) => {
+        console.log('✅ Conexión exitosa! Respuesta:', response);
+      },
+      error: (error) => {
+        console.error('❌ Error de conexión:', error);
+      }
     });
   }
 

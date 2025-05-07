@@ -18,6 +18,10 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+
+
 @NgModule({
   declarations: [
 
@@ -43,7 +47,12 @@ import { RegisterComponent } from './pages/register/register.component';
     RegisterComponent
   ],
   providers: [
-    provideAnimationsAsync(), // Añade esto para habilitar animaciones
+    provideAnimationsAsync(), 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: []
 })

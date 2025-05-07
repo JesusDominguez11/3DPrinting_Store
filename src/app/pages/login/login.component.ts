@@ -43,19 +43,12 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe({
       next: (success) => {
         this.isLoading = false;
-        if (success) {
-          if (rememberMe) {
-            // Opcional: Implementar "recordar sesión"
-            localStorage.setItem('rememberMe', 'true');
-          }
-          this.router.navigate(['/']);
-        } else {
-          this.errorMessage = 'Usuario o contraseña incorrectos';
-        }
+
+        this.router.navigate(['/']); // Redirige al home después de login
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = 'Error al intentar iniciar sesión. Por favor intenta nuevamente.';
+        this.errorMessage = error.error?.message || 'Error al intentar iniciar sesión. Por favor intenta nuevamente.';
         console.error('Login error:', error);
       }
     });

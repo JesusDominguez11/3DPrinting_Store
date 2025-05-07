@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../environment';
+import { HttpClient } from '@angular/common/http';
 
 interface User {
   id: number;
@@ -15,123 +17,55 @@ interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User | null>;
-  public currentUser: Observable<User | null>;
-  private usersKey = '3dverse_users';
+  private apiUrl = environment.apiUrl;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  // Usuarios "hardcodeados" - en una app real esto vendría de una API
-  private users: User[] = [
-    {
-      id: 1,
-      username: 'admin',
-      email: 'admin@example.com',
-      password: 'admin123',
-      name: 'Administrador'
-    },
-    {
-      id: 2,
-      username: 'usuario',
-      email: 'usuario@example.com',
-      password: 'usuario123',
-      name: 'Usuario Normal'
-    }
-  ];
-
-  constructor(private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User | null>(
-      JSON.parse(localStorage.getItem('currentUser') || 'null')
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient, private router: Router) {
+    // Verificar token al iniciar
+    this.checkAuthStatus();
   }
 
-  public get currentUserValue(): User | null {
-    return this.currentUserSubject.value;
-  }
-
-  login(username: string, password: string): Observable<boolean> {
-    // Simulamos un delay de API
-    return of(null).pipe(
-      delay(500),
-      map(() => {
-        const user = this.users.find(
-          u => u.username === username && u.password === password
-        );
-
-        if (user) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return true;
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, {
+      usernameOrEmail: username, // Ajuste para coincidir con el backend
+      password: password
+    }).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.storeAuthData(response);
+          this.isAuthenticatedSubject.next(true);
         }
-        return false;
       })
     );
+  }
+
+  private storeAuthData(authData: any): void {
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', JSON.stringify(authData.user));
+  }
+
+  private checkAuthStatus(): void {
+    const token = localStorage.getItem('token');
+    this.isAuthenticatedSubject.next(!!token);
   }
 
   logout(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/']);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.isAuthenticatedSubject.next(false);
+    this.router.navigate(['/login']);
   }
 
-  isAuthenticated(): boolean {
-    return this.currentUserValue !== null;
+  get isAuthenticated$(): Observable<boolean> {
+    return this.isAuthenticatedSubject.asObservable();
   }
 
-  getUserName(): string {
-    return this.currentUserValue?.name || '';
+  get currentUser(): any {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 
-  register(username: string, email: string, password: string): Observable<boolean> {
-    return of(null).pipe(
-      delay(500), // Simulamos tiempo de respuesta
-      map(() => {
-        const users = this.getUsers();
-        
-        // Verificar si el usuario o email ya existen
-        const usernameExists = users.some(u => u.username === username);
-        const emailExists = users.some(u => u.email === email);
-
-        if (usernameExists || emailExists) {
-          throw new Error(usernameExists ? 'El nombre de usuario ya existe' : 'El email ya está registrado');
-        }
-
-        // Crear nuevo usuario
-        const newUser: User = {
-          id: this.generateId(),
-          username,
-          email,
-          password, // En producción, esto debería estar hasheado
-          name: username // Podrías añadir un campo para nombre completo
-        };
-
-        // Guardar nuevo usuario
-        users.push(newUser);
-        localStorage.setItem(this.usersKey, JSON.stringify(users));
-
-        // Autologin después del registro
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-        this.currentUserSubject.next(newUser);
-
-        return true;
-      })
-    );
-  }
-
-  /**
-   * Obtiene todos los usuarios registrados
-   * @returns Array de usuarios
-   */
-  private getUsers(): User[] {
-    const usersJson = localStorage.getItem(this.usersKey);
-    return usersJson ? JSON.parse(usersJson) : [];
-  }
-
-  /**
-   * Genera un nuevo ID para el usuario
-   * @returns Nuevo ID numérico
-   */
-  private generateId(): number {
-    const users = this.getUsers();
-    return users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+  get token(): string | null {
+    return localStorage.getItem('token');
   }
 }

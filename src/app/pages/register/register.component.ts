@@ -44,18 +44,18 @@ export class RegisterComponent {
 
     const { username, email, password } = this.registerForm.value;
 
-    this.authService.register(username, email, password).subscribe({
-      next: (success) => {
-        this.isLoading = false;
-        if (success) {
-          this.router.navigate(['/']); // Redirige al home después de registro
-        }
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = error.message || 'Error al registrar la cuenta. Por favor intenta nuevamente.';
-      }
-    });
+    // this.authService.register(username, email, password).subscribe({
+    //   next: (success) => {
+    //     this.isLoading = false;
+    //     if (success) {
+    //       this.router.navigate(['/']); // Redirige al home después de registro
+    //     }
+    //   },
+    //   error: (error) => {
+    //     this.isLoading = false;
+    //     this.errorMessage = error.message || 'Error al registrar la cuenta. Por favor intenta nuevamente.';
+    //   }
+    // });
   }
 
   togglePasswordVisibility(): void {

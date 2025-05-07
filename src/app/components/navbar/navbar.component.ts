@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
 
         // Suscripción a cambios de autenticación
-        this.authSubscription = this.authService.currentUser.subscribe(user => {
+        this.authSubscription = this.authService.currentUser.subscribe((user: { name: string; } | null) => {
           this.isAuthenticated = user !== null;
           this.userName = user?.name || '';
         });

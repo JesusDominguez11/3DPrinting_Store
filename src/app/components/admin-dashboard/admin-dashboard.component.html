@@ -1,0 +1,92 @@
+<!-- admin-dashboard.component.html -->
+<div class="admin-dashboard">
+    <h2>Panel de Administración</h2>
+    
+    <div class="product-form">
+      <h3>{{ isEditing ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h3>
+      
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="newProduct.name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Precio:</label>
+          <input type="number" [(ngModel)]="newProduct.price" name="price" required min="0" step="0.01">
+        </div>
+        
+        <div class="form-group">
+          <label>Descripción:</label>
+          <textarea [(ngModel)]="newProduct.description" name="description"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Categoría:</label>
+          <select [(ngModel)]="newProduct.category" name="category" required>
+            <option value="anime">Anime</option>
+            <option value="videogames">Videojuegos</option>
+            <option value="custom">Personalizadas</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Tamaño:</label>
+          <select [(ngModel)]="newProduct.size" name="size">
+            <option value="Pequeño (5-10cm)">Pequeño (5-10cm)</option>
+            <option value="Mediano (15-20cm)">Mediano (15-20cm)</option>
+            <option value="Grande (25-30cm)">Grande (25-30cm)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Imágenes:</label>
+          <input type="file" multiple (change)="onImageUpload($event)" accept="image/*">
+          <div class="image-preview" *ngIf="newProduct.images.length > 0">
+            <p>Imágenes seleccionadas: {{ newProduct.images.length }}</p>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit">{{ isEditing ? 'Actualizar' : 'Agregar' }}</button>
+          <button type="button" (click)="resetForm()" *ngIf="isEditing">Cancelar</button>
+        </div>
+        
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+    
+    <div class="product-list">
+      <h3>Lista de Productos</h3>
+      
+      <div *ngIf="isLoading">Cargando productos...</div>
+      
+      <table *ngIf="!isLoading && products.length > 0">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | currency }}</td>
+            <td>{{ product.category }}</td>
+            <td class="actions">
+              <button (click)="editProduct(product)">Editar</button>
+              <button (click)="deleteProduct(product.id)" class="delete">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div *ngIf="!isLoading && products.length === 0" class="empty-message">
+        No hay productos registrados.
+      </div>
+    </div>
+  </div>

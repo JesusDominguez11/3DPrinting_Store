@@ -2,19 +2,36 @@ import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { ApiService } from './api.service'; // Importa el ApiService
 import { Observable } from 'rxjs';
+import { environment } from '../../../environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private products: Product[] = [];
+  private apiUrl = environment.apiUrl;
 
   private categories: string[] = ['anime', 'videogames', 'movies', 'originals', 'custom', 'tv'];
   private sizes: string[] = ['Pequeño (5-10cm)', 'Mediano (15-20cm)', 'Grande (25-30cm)'];
 
-  constructor(private apiService: ApiService) {} // Inyecta ApiService
+  constructor(
+    private apiService: ApiService,
+    private http: HttpClient
+  ) {} // Inyecta ApiService
 
   // Obtener todos los productos desde la API
   getProducts(): Observable<Product[]> {
     return this.apiService.get('products'); // Asume que tu API tiene un endpoint '/products'
+  }
+
+  // Obtener un producto por ID desde la API
+  getProductById(id: string): Observable<Product> {
+    return this.apiService.get(`products/${id}`); // Asume un endpoint '/products/:id'
+  }
+  
+  // Obtener productos relacionados (ajusta según tu lógica de backend)
+  getRelatedProducts(currentProductId: string): Observable<Product[]> {
+    // Si tu API soporta filtrado por categoría, podrías hacer:
+    return this.apiService.get(`products/related/${currentProductId}`);
   }
 
   getCategories(): string[] {
@@ -25,14 +42,22 @@ export class ProductService {
     return this.sizes;
   }
 
-  // Obtener un producto por ID desde la API
-  getProductById(id: string): Observable<Product> {
-    return this.apiService.get(`products/${id}`); // Asume un endpoint '/products/:id'
+  createProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.apiUrl}/products`, product);
   }
 
-  // Obtener productos relacionados (ajusta según tu lógica de backend)
-  getRelatedProducts(currentProductId: string): Observable<Product[]> {
-    // Si tu API soporta filtrado por categoría, podrías hacer:
-    return this.apiService.get(`products/related/${currentProductId}`);
+  updateProduct(id: string, product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, product);
+  }
+
+  deleteProduct(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/products/${id}`);
+  }
+
+  // Si necesitas manejar la subida de imágenes por separado
+  uploadImage(image: File): Observable<{url: string}> {
+    const formData = new FormData();
+    formData.append('image', image);
+    return this.http.post<{url: string}>(`${this.apiUrl}/upload`, formData);
   }
 }

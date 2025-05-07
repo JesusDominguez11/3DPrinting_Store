@@ -25,8 +25,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private authSubscription!: Subscription;
   isAuthenticated = false;
   userName = '';
+  userEmail = '';
   isUserMenuOpen: boolean = false;
-  isLoggedIn: boolean = this.isAuthenticated;
+  // isLoggedIn: boolean = this.isAuthenticated;
 
 
   constructor(private cartService: CartService, 
@@ -72,11 +73,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.currentRoute = event.url;
     });
 
-        // Suscripción a cambios de autenticación
-        this.authSubscription = this.authService.currentUser.subscribe((user: { name: string; } | null) => {
-          this.isAuthenticated = user !== null;
-          this.userName = user?.name || '';
-        });
+    // Suscripción a cambios de autenticación
+    this.authSubscription = this.authService.isAuthenticated$.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+      if (isAuthenticated) {
+        const user = this.authService.currentUser;
+        this.userName = user?.username || '';
+        this.userEmail = user?.email || '';
+      } else {
+        this.userName = '';
+        this.userEmail = '';
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -94,9 +102,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logout() {
     this.authService.logout();
     this.isMenuOpen = false;
+    this.isUserMenuOpen = false;
+    this.router.navigate(['/']);
   }
-
-  // ... (otros métodos se mantienen igual)
 
   scrollTo(sectionId: string) {
     this.isMenuOpen = false;
@@ -136,13 +144,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+    this.isMenuOpen = false;
+  }
 
-
-
-
-
-
-
+  goToProfile() {
+    this.router.navigate(['/profile']);
+    this.isUserMenuOpen = false;
+  }
 
   triggerCartAnimation() {
     this.isCartPulsing = true;
@@ -165,7 +175,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     }
   }
-
 
 // metodos para el modo responsivo
   toggleMenu() {

@@ -70,6 +70,7 @@
         <button (click)="navigateTo('/register'); toggleUserMenu();">Registrarse</button>
       </div>
       <div *ngIf="isAuthenticated">
+        <span>{{userName}}</span>
         <button (click)="navigateTo('/profile'); toggleUserMenu();">Mi perfil</button>
         <!-- <button *ngIf="isAdmin" (click)="navigateTo('/admin')">Panel de admin</button> -->
         <button (click)="logout()">Cerrar sesión</button>

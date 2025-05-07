@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
   featuredProducts: Product[] = [];
   
   ngOnInit() {
-    // this.featuredProducts = this.productService.getProducts().slice(0, 4)
+    this.productService.getProducts().subscribe(products => {
+      this.featuredProducts = products.slice(0, 4); // Aquí products ya es un array
+    });
   }
 
   onAddToCart(product: Product) {

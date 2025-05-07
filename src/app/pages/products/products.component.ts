@@ -33,27 +33,7 @@ export class ProductsComponent {
 
     // Estado sidebar
   isSidebarOpen = false;
-
-// Actualiza el término de búsqueda
-updateSearchTerm(event: Event): void {
-  this.searchTerm = (event.target as HTMLInputElement).value;
-  this.applyFilters();
-}
-
-  // Método para actualizar precios de manera segura
-  updatePrice(type: 'min' | 'max', event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const value = parseFloat(inputElement.value);
-    
-    if (!isNaN(value)) {
-      if (type === 'min') {
-        this.currentPriceRange.min = value;
-      } else {
-        this.currentPriceRange.max = value;
-      }
-      this.applyFilters();
-    }
-  }
+  isLoading = true;
 
   constructor(
     private productService: ProductService,
@@ -75,17 +55,43 @@ updateSearchTerm(event: Event): void {
   }
 
   loadProducts() {
+    this.isLoading = true;
     this.productService.getProducts().subscribe({
       next: (productsFromApi) => {
-        this.products = productsFromApi; // Asigna los datos cuando lleguen
-        console.log(this.products)
+        this.products = productsFromApi;
+        this.filteredProducts = [...this.products];
+        this.calculatePriceRange();
+        this.applyFilters();
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error al cargar productos:', err);
-        // Puedes asignar un array vacío o mostrar un mensaje de error
         this.products = [];
+        this.filteredProducts = [];
+        this.isLoading = false;
       }
     });
+  }
+
+  // Actualiza el término de búsqueda
+  updateSearchTerm(event: Event): void {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+    this.applyFilters();
+  }
+
+  // Método para actualizar precios
+  updatePrice(type: 'min' | 'max', event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const value = parseFloat(inputElement.value);
+    
+    if (!isNaN(value)) {
+      if (type === 'min') {
+        this.currentPriceRange.min = value;
+      } else {
+        this.currentPriceRange.max = value;
+      }
+      this.applyFilters();
+    }
   }
 
   toggleSidebar(): void {
@@ -105,6 +111,7 @@ updateSearchTerm(event: Event): void {
 
   // Aplica todos los filtros
   applyFilters(): void {
+    this.currentPage = 1; // Resetear a la primera página al aplicar filtros
     this.filteredProducts = this.products.filter(product => {
       // Filtro por término de búsqueda
       const matchesSearch = this.searchTerm === '' || 
@@ -126,9 +133,6 @@ updateSearchTerm(event: Event): void {
       return matchesSearch && matchesCategory && matchesSize && matchesPrice;
     });
   }
-
-  
-
 
   // Restablece todos los filtros
   clearFilters(): void {
@@ -163,15 +167,6 @@ updateSearchTerm(event: Event): void {
   onPriceChange(): void {
     this.applyFilters();
   }
-
-  // Método para obtener productos filtrados
-  // get filteredProducts(): Product[] {
-  //   if (!this.searchTerm) return this.products;
-  //   return this.products.filter(product => 
-  //     product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-  //     product.description?.toLowerCase().includes(this.searchTerm.toLowerCase())
-  //   );
-  // }
 
   // Método para obtener productos paginados
   get paginatedProducts(): Product[] {

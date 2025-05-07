@@ -59,7 +59,7 @@ updateSearchTerm(event: Event): void {
     private productService: ProductService,
     private cartService: CartService
   ) {
-    this.products = this.productService.getProducts();
+    // this.products = this.productService.getProducts();
     this.filteredProducts = [...this.products];
     this.categories = this.productService.getCategories();
     this.sizes = this.productService.getSizes();
@@ -68,6 +68,24 @@ updateSearchTerm(event: Event): void {
 
     // Inicializar con el rango de precios real
     this.priceRange.max = Math.max(...this.products.map(p => p.price));
+  }
+
+  ngOnInit() {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService.getProducts().subscribe({
+      next: (productsFromApi) => {
+        this.products = productsFromApi; // Asigna los datos cuando lleguen
+        console.log(this.products)
+      },
+      error: (err) => {
+        console.error('Error al cargar productos:', err);
+        // Puedes asignar un array vacío o mostrar un mensaje de error
+        this.products = [];
+      }
+    });
   }
 
   toggleSidebar(): void {

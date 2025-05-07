@@ -5,6 +5,7 @@ import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -16,6 +17,7 @@ import { NgModule } from '@angular/core';
 export class ProductDetailComponent implements OnInit {
   product!: Product;
   relatedProducts: Product[] = [];
+  loading = true; // Para manejar el estado de carga
 
   constructor(
     private route: ActivatedRoute,
@@ -25,16 +27,40 @@ export class ProductDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    try {
-      if (productId) {
-        this.product = this.productService.getProductById(productId);
-        this.relatedProducts = this.productService.getRelatedProducts(productId);
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const productId = params.get('id');
+        if (!productId) {
+          this.router.navigate(['/products']);
+          return of(null);
+        }
+        
+        this.loading = true;
+        return this.productService.getProductById(productId).pipe(
+          switchMap(product => {
+            this.product = product;
+            return this.productService.getRelatedProducts(productId);
+          }),
+          catchError(error => {
+            console.error('Error loading product:', error);
+            this.router.navigate(['/products']);
+            return of([]);
+          })
+        );
+      })
+    ).subscribe({
+      next: (relatedProducts) => {
+        if (relatedProducts) {
+          this.relatedProducts = relatedProducts;
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        this.loading = false;
+        this.router.navigate(['/products']);
       }
-    } catch (error) {
-      // Redirigir a página de error o lista de productos
-      this.router.navigate(['/products']);
-    }
+    });
   }
 
   addToCart(): void {

@@ -8,7 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = '/api';
 
   constructor(private http: HttpClient) { }
 
@@ -34,7 +34,7 @@ export class ApiService {
 
   // api.service.ts
 testConnection(): Observable<any> {
-  return this.http.get(`${this.apiUrl}/health-check`).pipe(
+  return this.http.get(`${this.apiUrl}/ping`).pipe(
     catchError(error => {
       console.error('Error de conexión:', error);
       return throwError(error);

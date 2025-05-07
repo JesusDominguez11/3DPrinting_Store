@@ -20,7 +20,7 @@ export class AppComponent {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private api: ApiService
+    private apiService: ApiService
   ) {
 
     
@@ -40,7 +40,7 @@ export class AppComponent {
   }
 
   testApiConnection() {
-    this.api.testConnection().subscribe({
+    this.apiService.testConnection().subscribe({
       next: (response) => {
         console.log('✅ Conexión exitosa! Respuesta:', response);
       },

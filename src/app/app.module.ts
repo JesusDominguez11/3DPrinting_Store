@@ -20,11 +20,16 @@ import { RegisterComponent } from './pages/register/register.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
   declarations: [
 
+  
+    ProfileComponent,
+         AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

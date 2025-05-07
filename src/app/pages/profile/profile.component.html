@@ -1,0 +1,45 @@
+<!-- profile.component.html -->
+<div class="profile-container">
+    <div class="profile-sidebar">
+      <div class="user-info">
+        <div class="avatar">{{ currentUser?.username?.charAt(0) | uppercase }}</div>
+        <h3>{{ currentUser?.username }}</h3>
+        <p>{{ currentUser?.email }}</p>
+      </div>
+  
+      <nav class="profile-nav">
+        <ul>
+          <li [class.active]="activeTab === 'profile'">
+            <a (click)="setActiveTab('profile')">Perfil</a>
+          </li>
+          <li *ngIf="isAdmin" [class.active]="activeTab === 'dashboard'">
+            <a (click)="setActiveTab('dashboard')">Dashboard</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  
+    <div class="profile-content">
+      <div *ngIf="activeTab === 'profile'">
+        <h2>Información del Perfil</h2>
+        <div class="profile-details">
+          <div class="detail">
+            <label>Nombre de usuario:</label>
+            <p>{{ currentUser?.username }}</p>
+          </div>
+          <div class="detail">
+            <label>Email:</label>
+            <p>{{ currentUser?.email }}</p>
+          </div>
+          <div class="detail">
+            <label>Rol:</label>
+            <p>{{ currentUser?.role }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="activeTab === 'dashboard' && isAdmin">
+        <!-- <app-admin-dashboard></app-admin-dashboard> -->
+      </div>
+    </div>
+  </div>

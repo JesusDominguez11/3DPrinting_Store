@@ -56,6 +56,22 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/register`, {
+      username,
+      email,
+      password,
+      name: username // Asumiendo que tu API espera un campo 'name'
+    }).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.storeAuthData(response);
+          this.isAuthenticatedSubject.next(true);
+        }
+      })
+    );
+  }
+
   get isAuthenticated$(): Observable<boolean> {
     return this.isAuthenticatedSubject.asObservable();
   }

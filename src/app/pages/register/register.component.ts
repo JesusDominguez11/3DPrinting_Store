@@ -36,6 +36,8 @@ export class RegisterComponent {
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
+      // Marcar todos los campos como touched para mostrar errores
+      this.registerForm.markAllAsTouched();
       return;
     }
 
@@ -44,18 +46,24 @@ export class RegisterComponent {
 
     const { username, email, password } = this.registerForm.value;
 
-    // this.authService.register(username, email, password).subscribe({
-    //   next: (success) => {
-    //     this.isLoading = false;
-    //     if (success) {
-    //       this.router.navigate(['/']); // Redirige al home después de registro
-    //     }
-    //   },
-    //   error: (error) => {
-    //     this.isLoading = false;
-    //     this.errorMessage = error.message || 'Error al registrar la cuenta. Por favor intenta nuevamente.';
-    //   }
-    // });
+    this.authService.register(username, email, password).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.router.navigate(['/']); // Redirige al home después de registro
+      },
+      error: (error) => {
+        this.isLoading = false;
+        // Manejo de errores específicos del backend
+        if (error.error?.type === 'ValidationError') {
+          this.errorMessage = error.error.message;
+        } else if (error.status === 409) {
+          this.errorMessage = 'El nombre de usuario o email ya está en uso';
+        } else {
+          this.errorMessage = 'Error al registrar la cuenta. Por favor intenta nuevamente.';
+        }
+        console.error('Registration error:', error);
+      }
+    });
   }
 
   togglePasswordVisibility(): void {
@@ -78,4 +86,7 @@ export class RegisterComponent {
     this.router.navigate(['/login']);
   }
 
+  get f() {
+    return this.registerForm.controls;
+  }
 }

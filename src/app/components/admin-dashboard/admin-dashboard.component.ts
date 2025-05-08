@@ -61,6 +61,10 @@ export class AdminDashboardComponent implements OnInit {
         }
       });
     } else {
+      if (this.newProduct.images.length === 0) {
+        this.newProduct.images = ['src/images'];
+      }
+
       this.productService.createProduct(this.newProduct).subscribe({
         next: () => {
           this.loadProducts();

@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = '/api';
+  private apiUrl = 'https://threedverse-api.onrender.com';
   // private apiUrl2 = environment.apiUrl;
 
   constructor(    

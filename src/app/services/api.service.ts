@@ -68,6 +68,34 @@ export class ApiService {
     );
   }
 
+// Método específico para upload de imágenes
+uploadImage(file: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  // Headers sin Content-Type para permitir que el navegador
+  // establezca automáticamente multipart/form-data con el boundary
+  let headers = new HttpHeaders();
+  const token = this.authService.token;
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  return this.http.post(`${this.apiUrl}/images/upload`, formData, {
+    headers: headers
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+deleteImage(publicId: string): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/images/${publicId}`, {
+    headers: this.getHeaders()
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
+
   private handleError(error: any) {
     console.error('API Error:', error);
     return throwError(() => error);

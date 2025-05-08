@@ -22,7 +22,7 @@ export class ProductsComponent {
 
   //pagination
   currentPage = 1;
-  itemsPerPage = 8;
+  itemsPerPage = 6;
 
   //filters
   searchTerm: string = '';

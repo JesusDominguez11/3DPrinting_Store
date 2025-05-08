@@ -52,21 +52,4 @@ export class ProductService {
   deleteProduct(id: string): Observable<void> {
     return this.apiService.delete('products', id) as Observable<void>;
   }
-
-  // Si necesitas manejar la subida de imágenes por separado
-  // uploadImage(image: File): Observable<{url: string}> {
-  //   const formData = new FormData();
-  //   formData.append('image', image);
-    
-  //   // Para uploads de archivos necesitamos un enfoque diferente
-  //   return this.apiService.http.post<{url: string}>(
-  //     `${this.apiService.apiUrl}/upload`, 
-  //     formData,
-  //     {
-  //       headers: new HttpHeaders({
-  //         'Authorization': `Bearer ${this.apiService.authService.token}`
-  //       })
-  //     }
-  //   );
-  // }
 }

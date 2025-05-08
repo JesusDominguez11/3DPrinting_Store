@@ -8,7 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private products: Product[] = [];
-  private apiUrl = environment.apiUrl
+  // private apiUrl = environment.apiUrl
+  private apiUrl = '/api';
 
   private categories: string[] = ['anime', 'videogames', 'movies', 'originals', 'custom', 'tv'];
   private sizes: string[] = ['Pequeño (5-10cm)', 'Mediano (15-20cm)', 'Grande (25-30cm)'];
